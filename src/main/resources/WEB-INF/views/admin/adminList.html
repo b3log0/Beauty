@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>众创数字资产综合运营管理平台</title>
+    <link rel="stylesheet" href="${base}/static/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${base}/static/css/admin.css"/>
+</head>
+<body>
+	<div class="container">
+		<div class="content-search">
+			<form class="layui-form layui-form-pane" action="${base}/admin/adminList">
+				<div class="layui-inline">
+					<label class="layui-form-label" >姓名/账号</label>
+					<div class="layui-input-block">
+						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="请输入管理员姓名/账号" class="layui-input" type="text"/>
+					</div>
+				</div>
+
+				<div class="layui-inline"><button class="layui-btn" lay-submit="" type="submit">查询</button></div>
+			</form>
+		</div>
+		<div class="tar mt10">
+			<button class="layui-btn layui-btn-normal layui-btn-small add">+添加管理员</button>
+		</div>
+		<div class="table-listm roll-x">
+			<table class="layui-table" lay-skin="line">
+			  <thead>
+			    <tr>
+			      <th>账号</th>
+			      <th>姓名</th>
+			      <th>联系方式</th>
+			      <th>创建时间</th>
+			      <th>最后登录时间</th>
+					<th>状态</th>
+			      <th>操作</th>
+			    </tr> 
+			  </thead>
+			  <tbody>
+			  <% for(user in list){%>
+			    <tr>
+			      <td>${user.username}</td>
+			      <td>${user.name}</td>
+			      <td>${user.phone}</td>
+			      <td>${user.createdate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+			      <td>${user.lastlogindate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+					<td>${user.state==0?"正常":"冻结中……"}</td>
+			      <td>
+			      	<!---->
+			      	<button class="layui-btn layui-btn-warm layui-btn-small add">编辑</button>
+
+					  <%
+					  if(user.state==0){%>
+					  <button class="layui-btn layui-btn-danger layui-btn-small a4">冻结</button>
+					  <%}else{%>
+					  <button class="layui-btn layui-btn-normal layui-btn-small a1">解冻</button>
+					  <%}%>
+			      </td>
+			    </tr>
+			  <%}%>
+
+
+
+			  </tbody>
+			</table>   
+		</div>
+	</div>
+	<div id="table-pages" style="text-align:center"></div>
+	<script type="text/javascript" src="${base}/static/layui/layui.js"></script>
+    <script>
+		layui.use(['jquery', 'laydate','form','layer','laypage'], function(){
+			var $ = layui.jquery,
+			    laydate = layui.laydate,
+			    layer = layui.layer,
+			    laypage = layui.laypage;
+
+
+			// 分页
+			 laypage({
+			    cont: 'table-pages'
+			    ,pages: 2
+			    ,skip: true
+			  });
+
+            // 开始时间及截止时间
+            var start = {
+			   choose: function(datas){
+			      end.min = datas; //开始日选好后，重置结束日的最小日期
+			      end.start = datas //将结束日的初始值设定为开始日
+			    }
+			  };
+			  
+			  var end = {
+			    choose: function(datas){
+			      start.max = datas; //结束日选好后，重置开始日的最大日期
+			    }
+			  };
+
+			$('#start').click(function(){
+				start.elem = this;
+    			laydate(start);
+			});
+
+			$('#end').click(function(){
+				end.elem = this
+    			laydate(end);
+			});
+
+		    // 删除操作
+		    $(document).on("click", ".a4", function() {
+			    layer.open({
+			      title:"删除操作"
+				  ,content: '您确认要删除该商品吗？'
+				  ,btn: ['取消', '确认']
+				  ,yes: function(index, layero){
+				       layer.closeAll();
+				  }
+				  ,btn2: function(index, layero){
+				      layer.msg('删除成功！',{time: 1000});
+				  }
+				});
+			});
+			// 上架操作
+			$(document).on("click", ".a1", function() {
+			    layer.open({
+			      title:"上架操作"
+				  ,content: '您确认要上架该商品吗？'
+				  ,btn: ['取消', '确认']
+				  ,yes: function(index, layero){
+				       layer.closeAll();
+				  }
+				  ,btn2: function(index, layero){
+				      layer.msg('上架成功！',{time: 1000});
+				  }
+				});
+			});
+			// 下架操作
+			$(document).on("click", ".a2", function() {
+			    layer.open({
+			      title:"冻结操作"
+				  ,content: '您确认要冻结该用户吗？'
+				  ,btn: ['取消', '确认']
+				  ,yes: function(index, layero){
+				       layer.closeAll();
+				  }
+				  ,btn2: function(index, layero){
+				      layer.msg('下架成功！',{time: 1000});
+				  }
+				});
+			});
+			// 发布商品
+			$(document).on("click", ".add", function() {
+			    layer.open({
+			      type:2
+			      ,area:['80%', '90%']
+			      ,title:"添加管理员"
+				  ,content: '${base}/admin/addAdmin'
+				});
+			});
+
+			// 商品详情
+			$(document).on("click", ".a3", function() {
+			    layer.open({
+			      type:2
+			      ,area:['80%', '90%']
+			      ,title:"商品详情"
+				  ,content: '商品详情.html'
+				});
+			});
+			
+		});
+	</script>
+</body>
+</html>
