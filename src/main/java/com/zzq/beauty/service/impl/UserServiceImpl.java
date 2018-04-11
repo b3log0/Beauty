@@ -27,4 +27,14 @@ public class UserServiceImpl implements UserService{
 	public int isHaveUserName(String username) {
 		return userMapper.isHaveUserName(username).intValue();
 	}
+
+	@Override
+	public User getUserById(Integer id) {
+		return userMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void updateUser(User user) {
+		userMapper.updateByPrimaryKeySelective(user);
+	}
 }

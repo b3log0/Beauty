@@ -49,7 +49,7 @@
 					<td>${user.state==0?"正常":"冻结中……"}</td>
 			      <td>
 			      	<!---->
-			      	<button class="layui-btn layui-btn-warm layui-btn-small add">编辑</button>
+			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${user.id}">编辑</button>
 
 					  <%
 					  if(user.state==0){%>
@@ -160,15 +160,16 @@
 				});
 			});
 
-			// 商品详情
-			$(document).on("click", ".a3", function() {
-			    layer.open({
-			      type:2
-			      ,area:['80%', '90%']
-			      ,title:"商品详情"
-				  ,content: '商品详情.html'
-				});
-			});
+            // 发布商品
+            $(document).on("click", ".edit", function() {
+                var id=this.id;
+                layer.open({
+                    type:2
+                    ,area:['80%', '90%']
+                    ,title:"编辑管理员"
+                    ,content: '${base}/admin/addAdmin?id='+id
+                });
+            });
 			
 		});
 	</script>

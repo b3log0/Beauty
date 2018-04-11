@@ -16,4 +16,14 @@ public class PersonServiceImpl implements PersonService{
     public void insert(Person person) {
         personMapper.insert(person);
     }
+
+    @Override
+    public Person getPersonById(Integer id) {
+        return personMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void updatePerson(Person person) {
+         personMapper.updateByPrimaryKeySelective(person);
+    }
 }

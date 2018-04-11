@@ -5,6 +5,7 @@ import com.zzq.beauty.model.User;
 import com.zzq.beauty.rest.MyRestResponse;
 import com.zzq.beauty.service.PersonService;
 import com.zzq.beauty.service.UserService;
+import com.zzq.beauty.util.CommonUtil;
 import com.zzq.beauty.util.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,9 @@ public class AdminController {
     @Autowired
     private PersonService personService;
 
+    private User user;
+    private Person person;
+
     @RequestMapping("/adminList")
     public ModelAndView adminList(
             @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
@@ -36,24 +40,44 @@ public class AdminController {
         return modelAndView;
     }
     @RequestMapping("/addAdmin")
-    public ModelAndView addAdmin(){
+    public ModelAndView addAdmin(@RequestParam(value = "id",defaultValue = "0",required =false) Integer id){
         ModelAndView modelAndView = new ModelAndView();
+        if(id!=0){//更新
+            person=personService.getPersonById(id);
+            user=userService.getUserById(person.getUserid());
+            modelAndView.addObject("person",person);
+            modelAndView.addObject("user",user);
+        }
         modelAndView.setViewName("admin/addAdmin");
         return modelAndView;
     }
     @RequestMapping("/saveAdmin")
     public @ResponseBody
-    MyRestResponse saveAdmin(@ModelAttribute User user, @ModelAttribute  Person person){
-        if(userService.isHaveUserName(user.getUsername())>0){
-            return new MyRestResponse(RestCode._201.getCode(),RestCode._201.getMessage());
+    MyRestResponse saveAdmin(@ModelAttribute User user, @ModelAttribute  Person person,
+                             @RequestParam(value = "personId",required = false) Integer personId,
+                             @RequestParam(value = "personId",required = false) Integer userId
+                             ){
+
+        System.out.println(personId+"------------------------");
+        if(personId==null&&userId==null){//新增
+            if(userService.isHaveUserName(user.getUsername())>0){
+                return new MyRestResponse(RestCode._201.getCode(),RestCode._201.getMessage());
+            }
+            user.setCreatedate(new Date());
+            user.setState(0);
+            userService.insert(user);
+            person.setUserid(user.getId());
+            person.setType(0);
+            person.setCreatedate(new Date());
+            personService.insert(person);
+            return new MyRestResponse(200,"成功");
+        }else{//修改
+            CommonUtil.copyProperties(user,userService.getUserById(userId));
+            CommonUtil.copyProperties(person,userService.getUserById(personId));
+            personService.updatePerson(person);
+            userService.updateUser(user);
+            return new MyRestResponse(RestCode._300.getCode(),RestCode._300.getMessage());
         }
-        user.setCreatedate(new Date());
-        user.setState(0);
-        userService.insert(user);
-        person.setUserid(user.getId());
-        person.setType(0);
-        person.setCreatedate(new Date());
-        personService.insert(person);
-        return new MyRestResponse(200,"成功");
+
     }
 }

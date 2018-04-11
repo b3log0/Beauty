@@ -104,7 +104,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getUserList" resultType="java.util.HashMap" parameterType="java.lang.String">
-    select user.username,person.name,person.phone,user.createdate,user.lastlogindate,user.state
+    select person.id, user.username,person.name,person.phone,user.createdate,user.lastlogindate,user.state
     from user,person where user.id=person.userId and type=0
       and (user.username like #{username,jdbcType=VARCHAR} or person.name like #{username,jdbcType=VARCHAR}) order by user.createdate DESC
 

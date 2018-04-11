@@ -9,4 +9,6 @@ public interface UserService {
 	void insert(User user);
 	List<Map<String,Object>> getUserList(int pageNum, int pageSize,String username);
 	int isHaveUserName(String username);
+	User getUserById(Integer id);
+	void updateUser(User user);
 }
