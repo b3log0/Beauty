@@ -6,6 +6,7 @@ import com.zzq.beauty.rest.MyRestResponse;
 import com.zzq.beauty.service.PersonService;
 import com.zzq.beauty.service.UserService;
 import com.zzq.beauty.util.CommonUtil;
+import com.zzq.beauty.util.PageBean;
 import com.zzq.beauty.util.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -33,8 +36,11 @@ public class AdminController {
             @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
             @RequestParam(value = "keyWord",defaultValue = "",required = false) String keyWord
     ){
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("list",userService.getUserList(pageNum,10,"%"+keyWord+"%"));
+        PageBean<List<Map<String,Object>>> page =userService.getUserList(pageNum,10,"%"+keyWord+"%");
+        modelAndView.addObject("list",page.getList());
+        modelAndView.addObject("page",page);
         modelAndView.addObject("keyWord",keyWord);
         modelAndView.setViewName("admin/adminList");
         return modelAndView;
@@ -57,8 +63,6 @@ public class AdminController {
                              @RequestParam(value = "personId",required = false) Integer personId,
                              @RequestParam(value = "personId",required = false) Integer userId
                              ){
-
-        System.out.println(personId+"------------------------");
         if(personId==null&&userId==null){//新增
             if(userService.isHaveUserName(user.getUsername())>0){
                 return new MyRestResponse(RestCode._201.getCode(),RestCode._201.getMessage());
@@ -72,6 +76,9 @@ public class AdminController {
             personService.insert(person);
             return new MyRestResponse(200,"成功");
         }else{//修改
+            /**
+             * 复制类
+             */
             CommonUtil.copyProperties(user,userService.getUserById(userId));
             CommonUtil.copyProperties(person,userService.getUserById(personId));
             personService.updatePerson(person);
@@ -80,4 +87,15 @@ public class AdminController {
         }
 
     }
+    @RequestMapping("/freezeOrUnfreeze")
+    public MyRestResponse freezeOrUnfreeze(@RequestParam(value = "userId") Integer userId){
+        userService.freezeOrUnfreeze(userId);
+        return new MyRestResponse(RestCode._200.getCode(),"更新成功");
+    }
+   /* @RequestMapping("/freezeOrUnfreeze")
+    public ModelAndView freezeOrUnfreeze(@RequestParam(value = "userId",required = false) Integer userId){
+        ModelAndView modelAndView= new ModelAndView();
+        modelAndView.setViewName("redirect:/admin/adminList");
+        return modelAndView;// "redirect:/admin/adminList";
+    }*/
 }

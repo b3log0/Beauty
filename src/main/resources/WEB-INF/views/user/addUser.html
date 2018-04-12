@@ -9,35 +9,26 @@
     <link rel="stylesheet" href="${base}/static/css/admin.css"/>
 </head>
 <body>
-    <form class="layui-form" id="adminform" action="${base}/admin/saveAdmin">
+    <form class="layui-form" id="adminform" action="${base}/user/saveUser">
 	    <table class="layui-table layui-table-add" lay-skin="nob">
 		  <tbody>
 		  <tr>
 			  <input type="hidden" name="personId" value="${person.id!}" />
-			  <input type="hidden" name="userId" value="${user.id!}" />
-		      <th width="100"><span class='red'>*</span>账号</th>
+		      <th width="100"><span class='red'>*</span>姓名</th>
 		      <td>
 				  <div style="width:30%">
-				  <input type="text" name="username" value="${user.username!}" placeholder="请输入用户名" autocomplete="off" class="layui-input"></td>
+				  <input type="text" name="name" value="${person.name!}" placeholder="姓名" autocomplete="off" class="layui-input"></td>
 			</div>
 			</tr>
 
 		    <tr>
-		      <th><span class='red'>*</span>密码</th>
+		      <th><span class='red'>*</span>手机号</th>
 		      <td>
 		        <div style="width:30%">
-		        	<input type="password" name="password" value="${user.password!}" placeholder="请输入要设置的密码" autocomplete="off" class="layui-input">
+		        	<input type="text" name="phone" value="${person.phone!}" placeholder="手机号码" autocomplete="off" class="layui-input">
 		        </div>
 		      </td>
 		    </tr>
-			<tr>
-				<th><span class='red'>*</span>姓名</th>
-				<td>
-					<div style="width:30%">
-						<input type="text" name="name" value="${person.name!}" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-					</div>
-				</td>
-			</tr>
 		    <tr>
 		      <th><span class='red'>*</span>性别</th>
 		      <td>
@@ -57,14 +48,22 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<th><span class='red'>*</span>联系方式</th>
-				<td>
-					<div style="width:30%">
-						<input type="text" name="phone" value="${person.phone!}" placeholder="请输入联系方式" autocomplete="off" class="layui-input">
-					</div>
-				</td>
-			</tr>
+		  <tr>
+			  <th><span class='red'>*</span>皮肤</th>
+			  <td>
+				  <div style="width:30%">
+					  <input type="text" name="skin" value="${person.skin!}" placeholder="请输入皮肤" autocomplete="off" class="layui-input">
+				  </div>
+			  </td>
+		  </tr>
+		  <tr>
+			  <th><span class='red'>*</span>症状</th>
+			  <td>
+				  <div style="width:30%">
+					  <input type="text" name="symptom" value="${person.symptom!}" placeholder="请输入皮肤" autocomplete="off" class="layui-input">
+				  </div>
+			  </td>
+		  </tr>
 			<tr>
 				<th><span class='red'>*</span>家庭住址</th>
 				<td>
@@ -73,6 +72,18 @@
 					</div>
 				</td>
 			</tr>
+		  <tr>
+			  <th><span class='red'>*</span>业务员</th>
+			  <td>
+				  <div style="width: 30%;">
+					  <select lay-verify="" name="userid">
+						  <% for(obj in salesMans){%>
+						  <option value="${obj.id!}" <%if(obj.id! ==salesManId!){%> selected="selected" <%}%> >${obj.name}</option>
+						  <%}%>
+					  </select>
+				  </div>
+			  </td>
+		  </tr>
 		  </tbody>
 		</table>
 		<div style="margin-left: 145px; margin-bottom: 15px;">	
@@ -85,15 +96,7 @@
 	<script type="text/javascript" src="${base}/static/js/jquery.form.js"></script>
 	<script type="text/javascript" src="${base}/static/js/util.js"></script>
 	<script>
-
-
         $("#adminBut").click(function() {
-
-            //
-
-
-
-
           $("#adminform").ajaxSubmit({
                 clearForm: false,
                 dataType: "JSON",

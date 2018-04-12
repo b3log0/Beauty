@@ -11,11 +11,11 @@
 <body>
 	<div class="container">
 		<div class="content-search">
-			<form class="layui-form layui-form-pane" action="${base}/admin/adminList">
+			<form class="layui-form layui-form-pane" action="${base}/user/userList">
 				<div class="layui-inline">
-					<label class="layui-form-label" >姓名/账号</label>
+					<label class="layui-form-label" >姓名/手机号</label>
 					<div class="layui-input-block">
-						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="请输入管理员姓名/账号" class="layui-input" type="text"/>
+						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="客户姓名/手机号" class="layui-input" type="text"/>
 					</div>
 				</div>
 
@@ -23,46 +23,43 @@
 			</form>
 		</div>
 		<div class="tar mt10">
-			<button class="layui-btn layui-btn-normal layui-btn-small add">+添加管理员</button>
+			<button class="layui-btn layui-btn-normal layui-btn-small add">+添加客户</button>
 		</div>
 		<div class="table-listm roll-x">
 			<table class="layui-table" lay-skin="line">
 			  <thead>
 			    <tr>
-			      <th>账号</th>
 			      <th>姓名</th>
-			      <th>联系方式</th>
+					<th>手机号</th>
+
+					<th>性别</th>
+					<th>年龄</th>
+					<th>皮肤</th>
+					<th>症状</th>
+					<th>家庭住址</th>
+					<th>业务员</th>
 			      <th>创建时间</th>
-			      <th>最后登录时间</th>
-					<th>状态</th>
 			      <th>操作</th>
 			    </tr> 
 			  </thead>
 			  <tbody>
 			  <% for(user in list){%>
 			    <tr>
-			      <td>${user.username}</td>
 			      <td>${user.name}</td>
 			      <td>${user.phone}</td>
+					<td>${user.sex}</td>
+					<td>${user.age}</td>
+					<td>${user.skin}</td>
+					<td>${user.symptom}</td>
+					<td>${user.address}</td>
+					<td>${user.userName}</td>
 			      <td>${user.createdate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
-			      <td>${user.lastlogindate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
-					<td>${user.state==0?"正常":"冻结中……"}</td>
 			      <td>
 			      	<!---->
 			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${user.id}">编辑</button>
-
-					  <%
-					  if(user.state==0){%>
-					  <button class="layui-btn layui-btn-danger layui-btn-small a4" id="${user.userid}">冻结</button>
-					  <%}else{%>
-					  <button class="layui-btn layui-btn-normal layui-btn-small a1" id="${user.userid}">解冻</button>
-					  <%}%>
 			      </td>
 			    </tr>
 			  <%}%>
-
-
-
 			  </tbody>
 			</table>   
 		</div>
@@ -153,7 +150,7 @@
 			      type:2
 			      ,area:['80%', '90%']
 			      ,title:"添加管理员"
-				  ,content: '${base}/admin/addAdmin'
+				  ,content: '${base}/user/addUser'
 				});
 			});
 
@@ -164,7 +161,7 @@
                     type:2
                     ,area:['80%', '90%']
                     ,title:"编辑管理员"
-                    ,content: '${base}/admin/addAdmin?id='+id
+                    ,content: '${base}/user/addUser?id='+id
                 });
             });
 			

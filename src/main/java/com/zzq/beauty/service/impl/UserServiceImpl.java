@@ -1,9 +1,11 @@
 package com.zzq.beauty.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zzq.beauty.mapper.UserMapper;
 import com.zzq.beauty.model.User;
 import com.zzq.beauty.service.UserService;
+import com.zzq.beauty.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +20,10 @@ public class UserServiceImpl implements UserService{
 		userMapper.insert(user);
 	}
 	@Override
-	public List<Map<String,Object>> getUserList(int pageNum, int pageSize,String username){
+	public PageBean<List<Map<String,Object>>> getUserList(int pageNum, int pageSize, String username){
 		PageHelper.startPage(pageNum,pageSize);
-		return userMapper.getUserList(username);
+		Page<List<Map<String,Object>>> page =userMapper.getUserList(username);
+		return new PageBean<List<Map<String,Object>>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
 	}
 
 	@Override
@@ -36,5 +39,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void updateUser(User user) {
 		userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public void freezeOrUnfreeze(Integer userId) {
+		User user =userMapper.selectByPrimaryKey(userId);
+		userMapper.freezeOrUnfreeze(userId,user.getState()==0?1:0);
 	}
 }

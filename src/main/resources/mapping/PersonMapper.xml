@@ -15,6 +15,7 @@
     <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
   </resultMap>
+
   <sql id="Base_Column_List" >
     id, name, age, sex, address, phone, userId, type, skin, symptom, createDate, updateDate
   </sql>
@@ -173,5 +174,30 @@
       updateDate = #{updatedate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getPersonAndReCommender" parameterType="java.lang.String" resultType="java.util.HashMap">
+    SELECT
+    person.*, (
+    SELECT
+    p.`name`
+    FROM
+    person AS p
+    WHERE
+    p.userId = person.userId
+    AND p.type = 0
+    ) AS userName
+    FROM
+    person
+    WHERE
+    person.type = 1
+    AND
+    (
+    person.phone LIKE #{keyWord}
+    OR person.`name` LIKE #{keyWord}
+    )
+  </select>
+
+  <select id="getSalesmanList" resultType="com.zzq.beauty.model.Person">
+    select person.id,person.name from person,user  where user.id=person.userId and  person.type=0 and user.state=0
+  </select>
 
 </mapper>

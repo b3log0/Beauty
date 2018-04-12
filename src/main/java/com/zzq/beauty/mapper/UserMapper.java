@@ -1,6 +1,8 @@
 package com.zzq.beauty.mapper;
 
+import com.github.pagehelper.Page;
 import com.zzq.beauty.model.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,10 +25,12 @@ public interface UserMapper {
      * 获取所有管理元
      * @return
      */
-    List<Map<String,Object>> getUserList(String username);
+    Page<List<Map<String,Object>>> getUserList(String username);
 
     /**
      * 判断当前账号是否已经存在
      */
     Long isHaveUserName(String userName);
+
+    void freezeOrUnfreeze(@Param("userId") Integer userId,@Param("state") Integer state);
 }
