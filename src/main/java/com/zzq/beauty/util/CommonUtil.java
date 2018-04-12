@@ -1,5 +1,6 @@
 package com.zzq.beauty.util;
 
+import com.zzq.beauty.model.Person;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -188,6 +189,58 @@ public class CommonUtil {
 
     }
 
+    /**
+     * 比较两个类  如果target类中属性值为null就把source的该属性值复制过去
+     * @param target
+     * @param source
+     */
+    public static void copyPropertiesToNull(Object target, Object source){
+
+        if(!target.getClass().getName().equals(source.getClass().getName())){
+            throw new IllegalArgumentException("参数必须是同一类型！");
+        }
+        if (target == null) {
+            throw new IllegalArgumentException("No destination bean specified");
+        }
+        if (source == null) {
+            throw new IllegalArgumentException("No origin bean specified");
+        }
+
+        if (source instanceof Map) {
+            throw new IllegalArgumentException("No support map");
+        }
+
+
+        PropertyDescriptor sourceDescriptors[] = PropertyUtils.getPropertyDescriptors(source);
+        PropertyDescriptor targetDescriptors[] = PropertyUtils.getPropertyDescriptors(target);
+        for (int i = 0; i < sourceDescriptors.length; i++) {
+            String name = sourceDescriptors[i].getName();
+            String targetTame=targetDescriptors[i].getName();
+            if ("class".equals(name)||"class".equals(targetTame)) {
+                continue; // No point in trying to set an object's class
+            }
+            if (PropertyUtils.isReadable(source, name) && PropertyUtils.isWriteable(target, name)
+                    &&PropertyUtils.isReadable(target, name) && PropertyUtils.isWriteable(source, name)
+                    ) {
+                try {
+                    Object sourceValue = PropertyUtils.getSimpleProperty(source, name);
+                    Object targetValue = PropertyUtils.getSimpleProperty(target, targetTame);
+                    if (sourceValue != null&&targetValue==null) {
+                        if (PropertyUtils.isReadable(target, name) && PropertyUtils.isWriteable(target, name)) {
+                            BeanUtils.copyProperty(target, name, sourceValue);
+                        }
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 
     /**
      * 将字符串List根据某种分隔符解析，删除或者
@@ -218,5 +271,24 @@ public class CommonUtil {
             helpList.add(spArray[i]);
         }
         return toString(helpList,separator);
+    }
+
+    public static void main(String[] args) {
+        Person person = new Person();
+
+        person.setId(2);
+
+
+        Person person1 = new Person();
+        person1.setUserid(1);
+        person1.setId(1);
+        person1.setType(1);
+        copyPropertiesToNull(person,new Date());
+        Object obj=person1;
+        System.out.println(obj.getClass().getName());
+        System.out.println("person"+person);
+        System.out.println("person1"+person1);
+
+
     }
 }

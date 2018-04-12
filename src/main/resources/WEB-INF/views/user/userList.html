@@ -52,8 +52,8 @@
 					<td>${user.skin}</td>
 					<td>${user.symptom}</td>
 					<td>${user.address}</td>
-					<td>${user.userName}</td>
-			      <td>${user.createdate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+					<td>${user.userName!"无"}</td>
+			      <td>${user.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 			      <td>
 			      	<!---->
 			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${user.id}">编辑</button>
@@ -154,7 +154,7 @@
 				});
 			});
 
-            // 发布商品
+            // 修改客户
             $(document).on("click", ".edit", function() {
                 var id=this.id;
                 layer.open({

@@ -90,4 +90,8 @@
       endDate = #{enddate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectLaster" parameterType="java.lang.Integer" resultType="com.zzq.beauty.model.Broker">
+    select * from broker where endDate IS NULL order by startDate DESC LIMIT 1
+  </select>
 </mapper>

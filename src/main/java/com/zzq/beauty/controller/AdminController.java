@@ -61,7 +61,7 @@ public class AdminController {
     public @ResponseBody
     MyRestResponse saveAdmin(@ModelAttribute User user, @ModelAttribute  Person person,
                              @RequestParam(value = "personId",required = false) Integer personId,
-                             @RequestParam(value = "personId",required = false) Integer userId
+                             @RequestParam(value = "userId",required = false) Integer userId
                              ){
         if(personId==null&&userId==null){//新增
             if(userService.isHaveUserName(user.getUsername())>0){
@@ -79,8 +79,10 @@ public class AdminController {
             /**
              * 复制类
              */
-            CommonUtil.copyProperties(user,userService.getUserById(userId));
-            CommonUtil.copyProperties(person,userService.getUserById(personId));
+            CommonUtil.copyPropertiesToNull(person,personService.getPersonById(personId));
+            CommonUtil.copyPropertiesToNull(user,userService.getUserById(userId));
+            person.setUpdatedate(new Date());
+            user.setCreatedate(new Date());
             personService.updatePerson(person);
             userService.updateUser(user);
             return new MyRestResponse(RestCode._300.getCode(),RestCode._300.getMessage());
@@ -88,7 +90,7 @@ public class AdminController {
 
     }
     @RequestMapping("/freezeOrUnfreeze")
-    public MyRestResponse freezeOrUnfreeze(@RequestParam(value = "userId") Integer userId){
+    public @ResponseBody MyRestResponse freezeOrUnfreeze(@RequestParam(value = "userId") Integer userId){
         userService.freezeOrUnfreeze(userId);
         return new MyRestResponse(RestCode._200.getCode(),"更新成功");
     }

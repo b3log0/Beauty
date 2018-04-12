@@ -76,7 +76,8 @@
 			  <th><span class='red'>*</span>业务员</th>
 			  <td>
 				  <div style="width: 30%;">
-					  <select lay-verify="" name="userid">
+					  <select lay-verify="" name="user_Id">
+						  <option value="0" <%if(0 ==salesManId!){%> selected="selected" <%}%> >无</option>
 						  <% for(obj in salesMans){%>
 						  <option value="${obj.id!}" <%if(obj.id! ==salesManId!){%> selected="selected" <%}%> >${obj.name}</option>
 						  <%}%>

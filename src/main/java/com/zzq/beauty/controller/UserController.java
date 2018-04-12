@@ -3,6 +3,7 @@ package com.zzq.beauty.controller;
 import com.zzq.beauty.model.Person;
 import com.zzq.beauty.rest.MyRestResponse;
 import com.zzq.beauty.service.PersonService;
+import com.zzq.beauty.util.CommonUtil;
 import com.zzq.beauty.util.PageBean;
 import com.zzq.beauty.util.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -25,21 +27,22 @@ public class UserController{
 
     @RequestMapping("/userList")
 	public ModelAndView userList(@RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
-                                 @RequestParam(value = "pageNum",defaultValue = "",required = false) String  keyWord
+                                 @RequestParam(value = "keyWord",defaultValue = "",required = false) String  keyWord
                                  ){
 	    modelAndView = new ModelAndView();
         PageBean<List<Map<String,Object>>> page= personService.getPersonAndReCommender(pageNum,10,"%"+keyWord+"%");
         modelAndView.addObject("list",page.getList());
         modelAndView.addObject("page",page);
+        modelAndView.addObject("keyWord",keyWord);
         modelAndView.setViewName("/user/userList");
         return modelAndView;
     }
     @RequestMapping("/addUser")
     public ModelAndView addUser(
-                                @RequestParam(value = "personId",required = false) Integer personId
+                                @RequestParam(value = "id",required = false) Integer personId
     ){
 	    modelAndView = new ModelAndView();
-	    if(personId==null){//add
+	    if(personId==null||personId==0){//add
 
         }else{//edit
             Person person =personService.getPersonById(personId);
@@ -52,15 +55,25 @@ public class UserController{
         return modelAndView;
     }
     @RequestMapping("/saveUser")
-    public MyRestResponse saveUser(@RequestParam(value = "userId",defaultValue = "0",required = false) Integer userId,
-                                   @ModelAttribute("person") Person person,
-                                   @RequestParam(value = "id",defaultValue = "0",required = false) Integer id
+    public @ResponseBody MyRestResponse saveUser(@RequestParam(value = "user_Id",defaultValue = "0",required = false) Integer user_Id,
+                            @ModelAttribute("person") Person person,
+                            @RequestParam(value = "personId",defaultValue = "0",required = false) Integer personId
     ){
-        person.setType(1);
-        person.setCreatedate(new Date());
-        person.setUserid(userId);
-        personService.insert(person);
-        return new MyRestResponse(RestCode._200.getCode(),"添加成功！");
+        if(personId==null||personId==0){//save
+            person.setType(1);
+            person.setUserid(user_Id);
+            person.setCreatedate(new Date());
+            personService.insert(person);
+
+            return new MyRestResponse(RestCode._200.getCode(),"添加成功！");
+        }else{   //update
+            CommonUtil.copyPropertiesToNull(person,personService.getPersonById(personId));
+            person.setUpdatedate(new Date());
+            person.setUserid(user_Id);
+            personService.updatePerson(person);
+            return new MyRestResponse(RestCode._300.getCode(),RestCode._300.getMessage());
+        }
+
     }
 
 }

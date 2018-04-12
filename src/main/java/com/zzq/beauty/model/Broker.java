@@ -2,6 +2,9 @@ package com.zzq.beauty.model;
 
 import java.util.Date;
 
+/**
+ * 推荐人
+ */
 public class Broker {
     private Integer id;
 

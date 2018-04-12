@@ -16,4 +16,12 @@ public interface BrokerMapper {
     int updateByPrimaryKeySelective(Broker record);
 
     int updateByPrimaryKey(Broker record);
+
+    /**
+     * 查询 最后一条 推荐者信息
+     * @param clientID
+     * @return
+     */
+    Broker selectLaster(Integer clientID);
+
 }

@@ -41,7 +41,7 @@
       #{symptom,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zzq.beauty.model.Person" >
+  <insert id="insertSelective" parameterType="com.zzq.beauty.model.Person" keyProperty="id" useGeneratedKeys="true" >
     insert into person
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -159,7 +159,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zzq.beauty.model.Person" >
+  <update id="updateByPrimaryKey" parameterType="com.zzq.beauty.model.Person" keyProperty="id" useGeneratedKeys="true" >
     update person
     set name = #{name,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
@@ -182,7 +182,7 @@
     FROM
     person AS p
     WHERE
-    p.userId = person.userId
+    p.id = person.userId
     AND p.type = 0
     ) AS userName
     FROM
@@ -197,7 +197,7 @@
   </select>
 
   <select id="getSalesmanList" resultType="com.zzq.beauty.model.Person">
-    select person.id,person.name from person,user  where user.id=person.userId and  person.type=0 and user.state=0
+    select person.id,person.name from person,user  where user.id=person.userId and  person.type=0 and user.state=0 order by person.createDate  asc
   </select>
 
 </mapper>
