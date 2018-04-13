@@ -44,4 +44,9 @@ public class PersonServiceImpl implements PersonService{
     public List<Person> getSalesman() {
         return personMapper.getSalesmanList();
     }
+
+    @Override
+    public void updatePersonSelective(Person person) {
+        personMapper.updateByPrimaryKeySelective(person);
+    }
 }

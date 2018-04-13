@@ -26,4 +26,9 @@ public class BrokerServiceImpl implements BrokerService{
     public void updateLasterBrokerEndDate(Integer clientID) {
 
     }
+
+    @Override
+    public void updateBrokerSelective(Broker broker) {
+        brokerMapper.updateByPrimaryKeySelective(broker);
+    }
 }

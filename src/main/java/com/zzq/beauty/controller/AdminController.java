@@ -5,7 +5,6 @@ import com.zzq.beauty.model.User;
 import com.zzq.beauty.rest.MyRestResponse;
 import com.zzq.beauty.service.PersonService;
 import com.zzq.beauty.service.UserService;
-import com.zzq.beauty.util.CommonUtil;
 import com.zzq.beauty.util.PageBean;
 import com.zzq.beauty.util.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,15 +75,12 @@ public class AdminController {
             personService.insert(person);
             return new MyRestResponse(200,"成功");
         }else{//修改
-            /**
-             * 复制类
-             */
-            CommonUtil.copyPropertiesToNull(person,personService.getPersonById(personId));
-            CommonUtil.copyPropertiesToNull(user,userService.getUserById(userId));
             person.setUpdatedate(new Date());
+            person.setId(personId);
+            user.setId(userId);
             user.setCreatedate(new Date());
-            personService.updatePerson(person);
-            userService.updateUser(user);
+            personService.updatePersonSelective(person);
+            userService.updateUserSelective(user);
             return new MyRestResponse(RestCode._300.getCode(),RestCode._300.getMessage());
         }
 

@@ -43,6 +43,11 @@ public interface UserService {
 	void updateUser(User user);
 
 	/**
+	 * 空值不更新
+	 */
+	void updateUserSelective(User user);
+
+	/**
 	 * 冻结或者解冻账号
 	 */
 	void freezeOrUnfreeze(Integer userId);

@@ -12,8 +12,12 @@ public interface BrokerService {
     void update(Broker broker);
 
 
+    void updateBrokerSelective(Broker broker);
 
-
+    /**
+     * 更新最后的推荐人
+     * @param clientID
+     */
     void updateLasterBrokerEndDate(Integer clientID);
 
 

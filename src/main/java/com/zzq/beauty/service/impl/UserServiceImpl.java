@@ -38,12 +38,17 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void updateUser(User user) {
-		userMapper.updateByPrimaryKeySelective(user);
+		userMapper.updateByPrimaryKey(user);
 	}
 
 	@Override
 	public void freezeOrUnfreeze(Integer userId) {
 		User user =userMapper.selectByPrimaryKey(userId);
 		userMapper.freezeOrUnfreeze(userId,user.getState()==0?1:0);
+	}
+
+	@Override
+	public void updateUserSelective(User user) {
+		userMapper.updateByPrimaryKeySelective(user);
 	}
 }

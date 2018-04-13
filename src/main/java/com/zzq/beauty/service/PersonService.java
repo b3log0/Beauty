@@ -29,4 +29,6 @@ public interface PersonService {
      * 返回所有业务员
      */
     List<Person> getSalesman();
+
+    void updatePersonSelective(Person person);
 }

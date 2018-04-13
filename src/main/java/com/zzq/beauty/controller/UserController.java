@@ -3,7 +3,6 @@ package com.zzq.beauty.controller;
 import com.zzq.beauty.model.Person;
 import com.zzq.beauty.rest.MyRestResponse;
 import com.zzq.beauty.service.PersonService;
-import com.zzq.beauty.util.CommonUtil;
 import com.zzq.beauty.util.PageBean;
 import com.zzq.beauty.util.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,10 +66,10 @@ public class UserController{
 
             return new MyRestResponse(RestCode._200.getCode(),"添加成功！");
         }else{   //update
-            CommonUtil.copyPropertiesToNull(person,personService.getPersonById(personId));
             person.setUpdatedate(new Date());
+            person.setId(personId);
             person.setUserid(user_Id);
-            personService.updatePerson(person);
+            personService.updatePersonSelective(person);
             return new MyRestResponse(RestCode._300.getCode(),RestCode._300.getMessage());
         }
 
