@@ -1,6 +1,10 @@
 package com.zzq.beauty.service;
 
 import com.zzq.beauty.model.Broker;
+import com.zzq.beauty.util.PageBean;
+
+import java.util.List;
+import java.util.Map;
 
 public interface BrokerService {
     void insert (Broker broker);
@@ -15,10 +19,11 @@ public interface BrokerService {
     void updateBrokerSelective(Broker broker);
 
     /**
-     * 更新最后的推荐人
-     * @param clientID
+     * 获取所有客户的推荐人
+     * @param keyWord
+     * @return
      */
-    void updateLasterBrokerEndDate(Integer clientID);
+    PageBean<List<Map<String,Object>>> getAllPuller(String user,String puller,Integer pageNum,Integer pageSize);
 
 
 }

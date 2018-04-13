@@ -2,13 +2,17 @@ package com.zzq.beauty.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.zzq.beauty.mapper.BrokerMapper;
 import com.zzq.beauty.mapper.PersonMapper;
+import com.zzq.beauty.model.Broker;
 import com.zzq.beauty.model.Person;
 import com.zzq.beauty.service.PersonService;
 import com.zzq.beauty.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +21,17 @@ import java.util.Map;
 public class PersonServiceImpl implements PersonService{
     @Autowired
     PersonMapper personMapper;
+    @Autowired
+    BrokerMapper brokerMapper;
 
     @Override
+    @Transactional
     public void insert(Person person) {
+        Broker broker = new Broker();
+        broker.setClient(person.getId());
+        broker.setPuller(person.getUserid());
+        broker.setStartdate(new Date());
+        brokerMapper.insert(broker);
         personMapper.insert(person);
     }
 
@@ -46,7 +58,21 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
+    @Transactional
     public void updatePersonSelective(Person person) {
+        Person p =getPersonById(person.getId());
+        if(p.getUserid().intValue()!=person.getUserid().intValue()){
+            Broker broker=brokerMapper.selectLaster(person.getId());
+            if(broker!=null){
+                broker.setEnddate(new Date());
+                brokerMapper.updateByPrimaryKeySelective(broker);
+            }
+            broker = new Broker();
+            broker.setClient(person.getId());
+            broker.setPuller(person.getUserid());
+            broker.setStartdate(new Date());
+            brokerMapper.insert(broker);
+        }
         personMapper.updateByPrimaryKeySelective(person);
     }
 }

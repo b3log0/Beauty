@@ -94,4 +94,36 @@
   <select id="selectLaster" parameterType="java.lang.Integer" resultType="com.zzq.beauty.model.Broker">
     select * from broker where endDate IS NULL order by startDate DESC LIMIT 1
   </select>
+
+  <select id="getAllPuller" resultType="java.util.HashMap">
+    SELECT
+    p.`name`,
+    p.phone,
+    b.startDate,
+    b.endDate,
+    person.`name` AS pullerName,
+    person.phone AS pullerPhone
+    FROM
+    (broker AS b JOIN person AS p ON b.client = p.id )
+    LEFT JOIN person ON person.id = b.puller
+    WHERE
+    1=1
+
+
+      <if test="user != '%%'" >
+        AND
+        (
+        p.`name` LIKE #{user}
+        OR p.phone LIKE #{user}
+        )
+      </if>
+      <if test="puller != '%%'" >
+        AND (
+        person.`name` LIKE #{puller}
+        OR person.phone LIKE #{puller}
+        )
+      </if>
+    ORDER BY
+    b.id ASC
+  </select>
 </mapper>

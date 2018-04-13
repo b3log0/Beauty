@@ -1,7 +1,12 @@
 package com.zzq.beauty.mapper;
 
+import com.github.pagehelper.Page;
 import com.zzq.beauty.model.Broker;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BrokerMapper {
@@ -24,4 +29,5 @@ public interface BrokerMapper {
      */
     Broker selectLaster(Integer clientID);
 
+    Page<List<Map<String,Object>>> getAllPuller(@Param("user") String user,@Param("puller") String puller);
 }

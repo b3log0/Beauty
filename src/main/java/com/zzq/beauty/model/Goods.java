@@ -11,6 +11,8 @@ public class Goods {
 
     private Float price;
 
+    private Integer state;
+
     private Date createdate;
 
     private Date updatedate;
@@ -61,5 +63,13 @@ public class Goods {
 
     public void setUpdatedate(Date updatedate) {
         this.updatedate = updatedate;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

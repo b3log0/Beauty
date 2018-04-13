@@ -11,11 +11,11 @@
 <body>
 	<div class="container">
 		<div class="content-search">
-			<form class="layui-form layui-form-pane" action="${base}/user/userList">
+			<form class="layui-form layui-form-pane" action="${base}/goods/goodsList">
 				<div class="layui-inline">
-					<label class="layui-form-label" >姓名/手机号</label>
+					<label class="layui-form-label" >产品</label>
 					<div class="layui-input-block">
-						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="客户姓名/手机号" class="layui-input" type="text"/>
+						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="产品名称" class="layui-input" type="text"/>
 					</div>
 				</div>
 
@@ -23,42 +23,31 @@
 			</form>
 		</div>
 		<div class="tar mt10">
-			<button class="layui-btn layui-btn-normal layui-btn-small add">+添加客户</button>
+			<button class="layui-btn layui-btn-normal layui-btn-small add">+添加产品</button>
 		</div>
 		<div class="table-listm roll-x">
 			<table class="layui-table" lay-skin="line">
 			  <thead>
 			    <tr>
-			      <th>姓名</th>
-					<th>手机号</th>
-
-					<th>性别</th>
-					<th>年龄</th>
-					<th>皮肤</th>
-					<th>症状</th>
-					<th>家庭住址</th>
-					<th>业务员</th>
+			      <th>产品名</th>
+					<th>价格</th>
+					<th>库存</th>
 			      <th>创建时间</th>
+					<th>状态</th>
 			      <th>操作</th>
 			    </tr> 
 			  </thead>
 			  <tbody>
-			  <% for(user in list){%>
+			  <% for(goods in list){%>
 			    <tr>
-			      <td>${user.name}</td>
-			      <td>${user.phone}</td>
-					<td>${user.sex}</td>
-					<td>${user.age}</td>
-					<td>${user.skin}</td>
-					<td>${user.symptom}</td>
-					<td>${user.address}</td>
-					<td>${user.userName!"无"}</td>
-			      <td>${user.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+			        <td>${goods.name}</td>
+			        <td>${goods.price}</td>
+					<td>${goods.num}</td>
+			      <td>${goods.createdate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+					<td>${goods.state==1?"正常":"下架"}</td>
 			      <td>
-			      	<!---->
-			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${user.id}">编辑</button>
-					 <button class="layui-btn layui-btn-normal layui-btn-small buy" id="${user.id}">购买产品</button>
-
+			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${goods.id}">编辑</button>
+					<button class="layui-btn layui-btn-danger layui-btn-small a4" id="${goods.id}">下架</button>
 			      </td>
 			    </tr>
 			  <%}%>
@@ -73,12 +62,12 @@
 	<script type="text/javascript" src="${base}/static/js/util.js"></script>
 
     <script>
-		function freezeOrUnfreeze(userId) {
+		function shutDownOrUp(userId) {
             $.ajax({
                 type : "POST", //提交方式
-                url : "${base}/admin/freezeOrUnfreeze",//路径
+                url : "${base}/goods/shutDownOrUp",//路径
                 data : {
-                    "userId" : userId
+                    "goodsId" : userId
                 },//数据，这里使用的是Json格式进行传输
                 success : function(data) {//返回数据根据结果进行相应的处理
                     if(data.code==200){
@@ -112,18 +101,18 @@
                  }
              });
 
-		    // 冻结操作
+		    // 下架操作
 		    $(document).on("click", ".a4", function() {
 		        var userId=this.id;
 			    layer.open({
-			      title:"冻结操作"
-				  ,content: '您确认要冻结管理员吗？'
+			      title:"下架操作"
+				  ,content: '您确认要下架该商品吗？'
 				  ,btn: ['取消', '确认']
 				  ,yes: function(index, layero){
 				       layer.closeAll();
 				  }
 				  ,btn2: function(index, layero){
-                        freezeOrUnfreeze(userId);
+                        shutDownOrUp(userId);
                         thisWindowReload(1000);
 
 				  }
@@ -151,8 +140,8 @@
 			    layer.open({
 			      type:2
 			      ,area:['80%', '90%']
-			      ,title:"添加管理员"
-				  ,content: '${base}/user/addUser'
+			      ,title:"添加产品"
+				  ,content: '${base}/goods/addGoods'
 				});
 			});
 
@@ -162,8 +151,8 @@
                 layer.open({
                     type:2
                     ,area:['80%', '90%']
-                    ,title:"编辑管理员"
-                    ,content: '${base}/user/addUser?id='+id
+                    ,title:"编辑产品"
+                    ,content: '${base}/goods/addGoods?goodsId='+id
                 });
             });
 			

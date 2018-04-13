@@ -9,86 +9,39 @@
     <link rel="stylesheet" href="${base}/static/css/admin.css"/>
 </head>
 <body>
-    <form class="layui-form" id="adminform" action="${base}/user/saveUser">
+    <form class="layui-form" id="adminform" action="${base}/goods/saveGoods">
 	    <table class="layui-table layui-table-add" lay-skin="nob">
 		  <tbody>
 		  <tr>
-			  <input type="hidden" name="personId" value="${person.id!}" />
-		      <th width="100"><span class='red'>*</span>姓名</th>
+			  <input type="hidden" name="goodsId" value="${goods.id!}" />
+		      <th width="100"><span class='red'>*</span>产品</th>
 		      <td>
 				  <div style="width:30%">
-				  <input type="text" name="name" value="${person.name!}" placeholder="姓名" autocomplete="off" class="layui-input"></td>
+				  <input type="text" name="name" value="${goods.name!}" placeholder="产品名称" autocomplete="off" class="layui-input"></td>
 			</div>
 			</tr>
 
 		    <tr>
-		      <th><span class='red'>*</span>手机号</th>
+		      <th><span class='red'>*</span>价格</th>
 		      <td>
 		        <div style="width:30%">
-		        	<input type="text" name="phone" value="${person.phone!}" placeholder="手机号码" autocomplete="off" class="layui-input">
+		        	<input type="text" name="price" value="${goods.price!}" placeholder="产品价格" autocomplete="off" class="layui-input">
 		        </div>
 		      </td>
 		    </tr>
-		    <tr>
-		      <th><span class='red'>*</span>性别</th>
-		      <td>
-		        <div style="width: 30%;">
-		        	<select lay-verify="" name="sex">
-					  <option value="女" <%if(person.sex! =="女"){%> selected="selected" <%}%> >女</option>
-					  <option value="男" <%if(person.sex! =="男"){%> selected="selected" <%}%> >男</option>
-					</select>  
-		        </div>
-		      </td>
-		    </tr>
+
 			<tr>
-				<th><span class='red'>*</span>年龄</th>
+				<th><span class='red'>*</span>库存</th>
 				<td>
 					<div style="width:30%">
-						<input type="text" name="age" value="${person.age!}" placeholder="请输入年龄" autocomplete="off" class="layui-input">
+						<input type="text" name="num" value="${goods.num!}" placeholder="库存" autocomplete="off" class="layui-input">
 					</div>
 				</td>
 			</tr>
-		  <tr>
-			  <th><span class='red'>*</span>皮肤</th>
-			  <td>
-				  <div style="width:30%">
-					  <input type="text" name="skin" value="${person.skin!}" placeholder="请输入皮肤" autocomplete="off" class="layui-input">
-				  </div>
-			  </td>
-		  </tr>
-		  <tr>
-			  <th><span class='red'>*</span>症状</th>
-			  <td>
-				  <div style="width:30%">
-					  <input type="text" name="symptom" value="${person.symptom!}" placeholder="请输入皮肤" autocomplete="off" class="layui-input">
-				  </div>
-			  </td>
-		  </tr>
-			<tr>
-				<th><span class='red'>*</span>家庭住址</th>
-				<td>
-					<div style="width:30%">
-						<input type="text" name="address" value="${person.address!}" placeholder="请输入家庭住址" autocomplete="off" class="layui-input">
-					</div>
-				</td>
-			</tr>
-		  <tr>
-			  <th><span class='red'>*</span>业务员</th>
-			  <td>
-				  <div style="width: 30%;">
-					  <select lay-verify="" name="user_Id">
-						  <option value="0" <%if(0 ==salesManId!){%> selected="selected" <%}%> >无</option>
-						  <% for(obj in salesMans){%>
-						  <option value="${obj.id!}" <%if(obj.id! ==salesManId!){%> selected="selected" <%}%> >${obj.name}</option>
-						  <%}%>
-					  </select>
-				  </div>
-			  </td>
-		  </tr>
 		  </tbody>
 		</table>
 		<div style="margin-left: 145px; margin-bottom: 15px;">	
-			<div class="layui-btn" id="adminBut" style="min-width: 150px;">提 交</div>
+			<div class="layui-btn" id="adminBut" style=" min-width: 150px;">提 交</div>
 		</div>
 	</form>
 

@@ -2,11 +2,13 @@ package com.zzq.beauty.controller;
 
 import com.zzq.beauty.model.Person;
 import com.zzq.beauty.rest.MyRestResponse;
+import com.zzq.beauty.service.BrokerService;
 import com.zzq.beauty.service.PersonService;
 import com.zzq.beauty.util.PageBean;
 import com.zzq.beauty.util.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +24,9 @@ import java.util.Map;
 public class UserController{
 	@Autowired
 	private PersonService personService;
+	@Autowired
+    private BrokerService brokerService;
+
     private ModelAndView modelAndView;
 
     @RequestMapping("/userList")
@@ -54,6 +59,7 @@ public class UserController{
         return modelAndView;
     }
     @RequestMapping("/saveUser")
+    @Transactional
     public @ResponseBody MyRestResponse saveUser(@RequestParam(value = "user_Id",defaultValue = "0",required = false) Integer user_Id,
                             @ModelAttribute("person") Person person,
                             @RequestParam(value = "personId",defaultValue = "0",required = false) Integer personId
@@ -63,7 +69,6 @@ public class UserController{
             person.setUserid(user_Id);
             person.setCreatedate(new Date());
             personService.insert(person);
-
             return new MyRestResponse(RestCode._200.getCode(),"添加成功！");
         }else{   //update
             person.setUpdatedate(new Date());
