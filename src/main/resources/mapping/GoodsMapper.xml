@@ -122,4 +122,8 @@
   <select id="dropOffGoodsList"  resultMap="BaseResultMap" parameterType="java.lang.String">
     select * from goods where 1=1 and name like #{keyWord} and state=0 order by createDate DESC
   </select>
+
+  <update id="reduceInventory">
+        update goods set num=num-#{num} where id=#{id}
+  </update>
 </mapper>

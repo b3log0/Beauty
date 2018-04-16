@@ -11,11 +11,11 @@
 <body>
 	<div class="container">
 		<div class="content-search">
-			<form class="layui-form layui-form-pane" action="${base}/goods/goodsList">
+			<form class="layui-form layui-form-pane" action="${base}/buyGoods/buyGoodsList">
 				<div class="layui-inline">
-					<label class="layui-form-label" >产品</label>
+					<label class="layui-form-label" >产品/客户</label>
 					<div class="layui-input-block">
-						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="产品名称" class="layui-input" type="text"/>
+						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="产品名称/客户姓名" class="layui-input" type="text"/>
 					</div>
 				</div>
 
@@ -23,7 +23,7 @@
 			</form>
 		</div>
 		<div class="tar mt10">
-			<button class="layui-btn layui-btn-normal layui-btn-small add">+添加产品</button>
+			<!--<button class="layui-btn layui-btn-normal layui-btn-small add">+添加产品</button>-->
 		</div>
 		<div class="table-listm roll-x">
 			<table class="layui-table" lay-skin="line">
@@ -31,23 +31,27 @@
 			    <tr>
 			      <th>产品名</th>
 					<th>价格</th>
-					<th>库存</th>
-			      <th>创建时间</th>
+					<th>买入件数</th>
+			      <th>购买时间</th>
 					<th>状态</th>
+					<th>购买人</th>
+					<th>快照</th>
 			      <th>操作</th>
 			    </tr> 
 			  </thead>
 			  <tbody>
 			  <% for(goods in list){%>
-			    <tr ondblclick="buyGoods('${goods.id}','${goods.name}','${goods.num}')">
-			        <td>${goods.name}</td>
+			    <tr>
+			        <td>${goods.goodsName}</td>
 			        <td>${goods.price}</td>
 					<td>${goods.num}</td>
-			      <td>${goods.createdate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
-					<td>${goods.state==1?"正常":"下架"}</td>
+			        <td>${goods.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+					<td>${goods.state==1?"正常":"已用完"}</td>
+					<td>${goods.userName}</td>
+					<td>${goodsJSONFormat(goods.goodsSnapshot)}</td>
 			      <td>
-			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${goods.id}">编辑</button>
-					<button class="layui-btn layui-btn-danger layui-btn-small a4" id="${goods.id}">下架</button>
+			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${goods.id}">已用完</button>
+					<!--<button class="layui-btn layui-btn-danger layui-btn-small a4" id="${goods.id}">下架</button>-->
 			      </td>
 			    </tr>
 			  <%}%>

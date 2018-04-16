@@ -3,7 +3,9 @@ package com.zzq.beauty.util;
 public enum  RestCode {
     _200(200,"成功"),
     _201(201,"账号已存在！"),
-    _300(300,"修改成功！");
+    _300(300,"修改成功！"),
+    _301(301,"参数错误，请重新选择！"),
+    _302(302,"库存不足！"),;
     private int code;
     private String message;
 

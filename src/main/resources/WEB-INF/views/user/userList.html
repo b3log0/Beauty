@@ -166,6 +166,17 @@
                     ,content: '${base}/user/addUser?id='+id
                 });
             });
+
+            // 购买产品
+            $(document).on("click", ".buy", function() {
+                var id=this.id;
+                layer.open({
+                    type:2
+                    ,area:['90%', '90%']
+                    ,title:"双击删除商品"
+                    ,content: '${base}/buyGoods/buyGoodsPage?id='+id
+                });
+            });
 			
 		});
 	</script>

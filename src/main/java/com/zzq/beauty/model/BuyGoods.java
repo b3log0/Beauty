@@ -19,6 +19,8 @@ public class BuyGoods {
 
     private Date updatedate;
 
+    private Integer userId;
+
     public Integer getId() {
         return id;
     }
@@ -81,5 +83,13 @@ public class BuyGoods {
 
     public void setUpdatedate(Date updatedate) {
         this.updatedate = updatedate;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

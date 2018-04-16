@@ -1,7 +1,11 @@
 package com.zzq.beauty.mapper;
 
+import com.github.pagehelper.Page;
 import com.zzq.beauty.model.BuyGoods;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BuyGoodsMapper {
@@ -16,4 +20,6 @@ public interface BuyGoodsMapper {
     int updateByPrimaryKeySelective(BuyGoods record);
 
     int updateByPrimaryKey(BuyGoods record);
+
+    Page<List<Map<String,Object>>> buyGoodsList(String keyWord);
 }

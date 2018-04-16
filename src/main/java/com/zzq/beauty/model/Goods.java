@@ -1,8 +1,9 @@
 package com.zzq.beauty.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Goods {
+public class Goods implements Serializable{
     private Integer id;
 
     private String name;
