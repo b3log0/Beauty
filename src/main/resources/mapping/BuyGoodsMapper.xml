@@ -140,8 +140,16 @@
   </update>
 
   <select id="buyGoodsList" parameterType="java.lang.String" resultType="java.util.HashMap">
-    SELECT person.`name` AS userName,goods.`name` AS goodsName,buygoods.price,buygoods.goodsSnapshot,buygoods.createDate,buygoods.num,buygoods.state
+    SELECT buygoods.id,person.`name` AS userName,goods.`name` AS goodsName,buygoods.price,buygoods.goodsSnapshot,buygoods.createDate,buygoods.num,buygoods.state
     FROM buygoods,person,goods WHERE  buygoods.user_Id=person.id AND goods.id=buygoods.goodsId
     AND  (person.`name` LIKE #{keyWord} OR goods.`name` LIKE #{keyWord} ) ORDER BY buygoods.createDate DESC
+  </select>
+
+  <select id="getBuyGoodsAnEnd" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+    SELECT buygoods.id,buygoods.goodsSnapshot,goods.`name`  FROM buygoods,goods WHERE buygoods.goodsId=goods.id AND buygoods.user_Id=#{userId} AND buygoods.state=1
+  </select>
+
+  <select id="getCareBuyGoods" parameterType="java.lang.String" resultType="java.util.HashMap">
+    SELECT buygoods.goodsSnapshot,(SELECT goods.`name` FROM goods WHERE goods.id=buygoods.goodsId) AS goodsName FROM buygoods WHERE buygoods.id in (#{goodsIds})
   </select>
 </mapper>

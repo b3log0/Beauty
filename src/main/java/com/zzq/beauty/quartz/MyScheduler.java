@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyScheduler{
     @Autowired
-    SchedulerFactoryBean schedulerFactoryBean;
+    public SchedulerFactoryBean schedulerFactoryBean;
     public void scheduleJobs() throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
        /* startJob1(scheduler);

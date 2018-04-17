@@ -65,4 +65,12 @@ public class BuyGoodsController {
         modelAndView.setViewName("/buyGoods/buyGoodsList");
         return  modelAndView;
     }
+
+    //购买商品
+    @RequestMapping("/end")
+    public @ResponseBody
+    MyRestResponse end(@RequestParam(value = "id") Integer id){
+        buyGoodsService.end(id);
+        return new MyRestResponse(RestCode._200.getCode(),"操作成功！");
+    }
 }

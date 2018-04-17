@@ -9,7 +9,7 @@ public class CareRecord {
 
     private Integer userid;
 
-    private Integer goodsid;
+    private String goodsid;
 
     private Date createdate;
 
@@ -39,12 +39,12 @@ public class CareRecord {
         this.userid = userid;
     }
 
-    public Integer getGoodsid() {
+    public String getGoodsid() {
         return goodsid;
     }
 
-    public void setGoodsid(Integer goodsid) {
-        this.goodsid = goodsid;
+    public void setGoodsid(String goodsid) {
+        this.goodsid = goodsid == null ? null : goodsid.trim();
     }
 
     public Date getCreatedate() {

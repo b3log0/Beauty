@@ -48,9 +48,14 @@
 			        <td>${goods.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 					<td>${goods.state==1?"正常":"已用完"}</td>
 					<td>${goods.userName}</td>
-					<td>${goodsJSONFormat(goods.goodsSnapshot)}</td>
+					<td>${goodsJSONFormat(goods.goodsSnapshot,1)}</td>
 			      <td>
-			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${goods.id}">已用完</button>
+					  <%if(goods.state==0){%>
+						无操作
+					  <%}else{%>
+					  <button class="layui-btn layui-btn-warm layui-btn-small end" id="${goods.id}">已用完</button>
+					  <%}%>
+
 					<!--<button class="layui-btn layui-btn-danger layui-btn-small a4" id="${goods.id}">下架</button>-->
 			      </td>
 			    </tr>
@@ -82,12 +87,12 @@
             parent.layer.close(index);
         }
 
-		function shutDownOrUp(userId) {
+		function end(id) {
             $.ajax({
                 type : "POST", //提交方式
-                url : "${base}/goods/shutDownOrUp",//路径
+                url : "${base}/buyGoods/end",//路径
                 data : {
-                    "goodsId" : userId
+                    "id" : id
                 },//数据，这里使用的是Json格式进行传输
                 success : function(data) {//返回数据根据结果进行相应的处理
                     if(data.code==200){
@@ -126,63 +131,23 @@
                  }
              });
 
-		    // 下架操作
-		    $(document).on("click", ".a4", function() {
-		        var userId=this.id;
-			    layer.open({
-			      title:"下架操作"
-				  ,content: '您确认要下架该商品吗？'
-				  ,btn: ['取消', '确认']
-				  ,yes: function(index, layero){
-				       layer.closeAll();
-				  }
-				  ,btn2: function(index, layero){
-                        shutDownOrUp(userId);
-                        thisWindowReload(1000);
 
-				  }
-				});
-			});
 			// 解冻操作
-			$(document).on("click", ".a1", function() {
-                var userId=this.id;
+			$(document).on("click", ".end", function() {
+                var id=this.id;
 			    layer.open({
-			      title:"解冻操作"
-				  ,content: '您确认要解冻该管理员吗？'
+			      title:"商品用完操作"
+				  ,content: '您确认该商品已经使用完了吗？一旦操作不可恢复！'
 				  ,btn: ['取消', '确认']
 				  ,yes: function(index, layero){
 				       layer.closeAll();
 				  }
 				  ,btn2: function(index, layero){
-                        freezeOrUnfreeze(userId);
+                        end(id);
                         thisWindowReload(1000);
 				  }
 				});
 			});
-
-			// 发布商品
-			$(document).on("click", ".add", function() {
-			    layer.open({
-			      type:2
-			      ,area:['80%', '90%']
-			      ,title:"添加产品"
-				  ,content: '${base}/goods/addGoods'
-				});
-			});
-
-            // 修改客户
-            $(document).on("click", ".edit", function() {
-                var id=this.id;
-                layer.open({
-                    type:2
-                    ,area:['80%', '90%']
-                    ,title:"编辑产品"
-                    ,content: '${base}/goods/addGoods?goodsId='+id
-                });
-            });
-
-
-
 		});
 	</script>
 </body>

@@ -1,8 +1,11 @@
 package com.zzq.beauty.mapper;
 
+import com.github.pagehelper.Page;
 import com.zzq.beauty.model.CareRecord;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
 @Repository
 public interface CareRecordMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +19,6 @@ public interface CareRecordMapper {
     int updateByPrimaryKeySelective(CareRecord record);
 
     int updateByPrimaryKey(CareRecord record);
+
+    Page<List<Map<String,Object>>> list(String keyWord);
 }

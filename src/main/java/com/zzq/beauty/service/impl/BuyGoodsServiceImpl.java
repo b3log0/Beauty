@@ -68,4 +68,22 @@ public class BuyGoodsServiceImpl implements BuyGoodsService{
         Page<List<Map<String, Object>>> page =buyGoodsMapper.buyGoodsList(keyWord);
         return new PageBean<List<Map<String, Object>>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
     }
+
+    @Override
+    public void end(Integer id) {
+        BuyGoods buyGoods =buyGoodsMapper.selectByPrimaryKey(id);
+        buyGoods.setState(0);
+        buyGoods.setUpdatedate(new Date());
+        buyGoodsMapper.updateByPrimaryKeySelective(buyGoods);
+    }
+
+    @Override
+    public List<Map<String,Object>> getBuyGoodsAnEnd(Integer userId) {
+        return buyGoodsMapper.getBuyGoodsAnEnd(userId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCareBuyGoods(String goodsIds) {
+        return buyGoodsMapper.getCareBuyGoods(goodsIds);
+    }
 }

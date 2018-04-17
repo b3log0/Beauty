@@ -11,11 +11,11 @@
 <body>
 	<div class="container">
 		<div class="content-search">
-			<form class="layui-form layui-form-pane" action="${base}/user/userList">
+			<form class="layui-form layui-form-pane" action="${base}/careRecord/list">
 				<div class="layui-inline">
-					<label class="layui-form-label" >姓名/手机号</label>
+					<label class="layui-form-label" >客户姓名</label>
 					<div class="layui-input-block">
-						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="客户姓名/手机号" class="layui-input" type="text"/>
+						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="客户姓名" class="layui-input" type="text"/>
 					</div>
 				</div>
 
@@ -23,44 +23,26 @@
 			</form>
 		</div>
 		<div class="tar mt10">
-			<button class="layui-btn layui-btn-normal layui-btn-small add">+添加客户</button>
+			<!--<button class="layui-btn layui-btn-normal layui-btn-small add">+添加客户</button>-->
 		</div>
 		<div class="table-listm roll-x">
 			<table class="layui-table" lay-skin="line">
 			  <thead>
 			    <tr>
-			      <th>姓名</th>
-					<th>手机号</th>
+			        <th>客户姓名</th>
+					<th>护理人</th>
+					<th>使用产品</th>
+			      <th>护理时间</th>
 
-					<th>性别</th>
-					<th>年龄</th>
-					<th>皮肤</th>
-					<th>症状</th>
-					<th>家庭住址</th>
-					<th>业务员</th>
-			      <th>创建时间</th>
-			      <th>操作</th>
 			    </tr> 
 			  </thead>
 			  <tbody>
-			  <% for(user in list){%>
+			  <% for(care in list){%>
 			    <tr>
-			      <td>${user.name}</td>
-			      <td>${user.phone}</td>
-					<td>${user.sex}</td>
-					<td>${user.age}</td>
-					<td>${user.skin}</td>
-					<td>${user.symptom}</td>
-					<td>${user.address}</td>
-					<td>${user.userName!"无"}</td>
-			      <td>${user.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
-			      <td>
-			      	<!---->
-			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${user.id}">编辑</button>
-					 <button class="layui-btn layui-btn-normal layui-btn-small buy" id="${user.id}">购买产品</button>
-					  <button class="layui-btn layui-btn-small careLog" id="${user.id}">添加护理记录</button>
-
-			      </td>
+			      <td>${care.user}</td>
+			      <td>${care.technician!"无"}</td>
+				  <td>${careBuyGoodsFormat(care.goodsId)}</td>
+			      <td>${care.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 			    </tr>
 			  <%}%>
 			  </tbody>

@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="personId" property="personid" jdbcType="INTEGER" />
     <result column="userId" property="userid" jdbcType="INTEGER" />
-    <result column="goodsId" property="goodsid" jdbcType="INTEGER" />
+    <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
     <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -27,7 +27,7 @@
       goodsId, createDate, updateDate
       )
     values (#{id,jdbcType=INTEGER}, #{personid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
-      #{goodsid,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP}
+      #{goodsid,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zzq.beauty.model.CareRecord" >
@@ -63,7 +63,7 @@
         #{userid,jdbcType=INTEGER},
       </if>
       <if test="goodsid != null" >
-        #{goodsid,jdbcType=INTEGER},
+        #{goodsid,jdbcType=VARCHAR},
       </if>
       <if test="createdate != null" >
         #{createdate,jdbcType=TIMESTAMP},
@@ -83,7 +83,7 @@
         userId = #{userid,jdbcType=INTEGER},
       </if>
       <if test="goodsid != null" >
-        goodsId = #{goodsid,jdbcType=INTEGER},
+        goodsId = #{goodsid,jdbcType=VARCHAR},
       </if>
       <if test="createdate != null" >
         createDate = #{createdate,jdbcType=TIMESTAMP},
@@ -98,9 +98,31 @@
     update carerecord
     set personId = #{personid,jdbcType=INTEGER},
       userId = #{userid,jdbcType=INTEGER},
-      goodsId = #{goodsid,jdbcType=INTEGER},
+      goodsId = #{goodsid,jdbcType=VARCHAR},
       createDate = #{createdate,jdbcType=TIMESTAMP},
       updateDate = #{updatedate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="list" parameterType="java.lang.String" resultType="java.util.HashMap">
+    SELECT
+    carerecord.id,
+    p.`name` AS `user`,
+    (
+    SELECT
+    `name`
+    FROM
+    person
+    WHERE
+    person.id = p.userId
+    ) AS technician,
+    carerecord.goodsId,
+    carerecord.createDate
+    FROM
+    carerecord,
+    person AS p
+    WHERE
+    carerecord.personId = p.id
+    AND p.`name` LIKE #{keyWord}
+    ORDER BY carerecord.createDate DESC
+  </select>
 </mapper>

@@ -22,4 +22,9 @@ public interface BuyGoodsMapper {
     int updateByPrimaryKey(BuyGoods record);
 
     Page<List<Map<String,Object>>> buyGoodsList(String keyWord);
+
+    List<Map<String,Object>> getBuyGoodsAnEnd(Integer userId);
+
+    List<Map<String, Object>> getCareBuyGoods(String goodsIds);
+
 }
