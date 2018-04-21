@@ -5,6 +5,8 @@ import com.zzq.beauty.service.BuyGoodsService;
 import com.zzq.beauty.util.SpringContextUtils;
 import org.beetl.core.Context;
 import org.beetl.core.Function;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -13,15 +15,16 @@ import java.util.Map;
 /**
  * 护理使用的产品
  */
+@Component
 public class CareBuyGoodsFormat implements Function{
-
+    @Autowired
+    BuyGoodsService buyGoodsService;
     @Override
     public Object call(Object[] objects, Context context) {
         if(objects==null||objects.length>1||objects.length<1){
             return"参数错误";
         }
         StringBuffer sb = new StringBuffer();
-        BuyGoodsService buyGoodsService = SpringContextUtils.getBean(BuyGoodsService.class);
         List<Map<String,Object>> list = buyGoodsService.getCareBuyGoods(objects[0].toString());
         for (Map<String, Object> map :list){
             String goodsName= map.get("goodsName").toString();

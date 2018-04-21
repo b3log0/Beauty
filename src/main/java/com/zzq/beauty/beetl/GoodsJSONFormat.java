@@ -3,7 +3,9 @@ package com.zzq.beauty.beetl;
 import com.alibaba.fastjson.JSONObject;
 import org.beetl.core.Context;
 import org.beetl.core.Function;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GoodsJSONFormat implements Function {
     @Override
     public Object call(Object[] objects, Context context) {
