@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50617
-Source Host           : 127.0.0.1:3306
+Source Server         : qiangzi
+Source Server Version : 50528
+Source Host           : localhost:3306
 Source Database       : beauty
 
 Target Server Type    : MYSQL
-Target Server Version : 50617
+Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2018-04-11 17:27:44
+Date: 2018-04-21 21:26:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,16 +21,17 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `broker`;
 CREATE TABLE `broker` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `client` int(11) NOT NULL COMMENT '客户',
+  `client` int(11) DEFAULT NULL COMMENT '客户',
   `puller` int(11) NOT NULL COMMENT '开户人',
   `startDate` datetime DEFAULT NULL,
   `endDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of broker
 -- ----------------------------
+INSERT INTO `broker` VALUES ('1', null, '9', '2018-04-21 10:31:30', null);
 
 -- ----------------------------
 -- Table structure for buygoods
@@ -45,12 +46,14 @@ CREATE TABLE `buygoods` (
   `num` int(11) NOT NULL COMMENT '购买数量',
   `state` int(1) NOT NULL COMMENT '状态',
   `updateDate` datetime DEFAULT NULL,
+  `user_Id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of buygoods
 -- ----------------------------
+INSERT INTO `buygoods` VALUES ('1', '1', '123.00', '{\"createdate\":1524277738000,\"id\":1,\"name\":\"??\",\"num\":123,\"price\":123,\"state\":1}', '2018-04-21 10:31:41', '1', '1', null, '13');
 
 -- ----------------------------
 -- Table structure for carerecord
@@ -64,11 +67,12 @@ CREATE TABLE `carerecord` (
   `createDate` datetime DEFAULT NULL COMMENT '护理时间',
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of carerecord
 -- ----------------------------
+INSERT INTO `carerecord` VALUES ('1', '13', '9', '1', '2018-04-21 10:56:13', null);
 
 -- ----------------------------
 -- Table structure for goods
@@ -81,12 +85,14 @@ CREATE TABLE `goods` (
   `price` float(10,2) DEFAULT NULL,
   `createDate` datetime DEFAULT NULL,
   `updateDate` datetime DEFAULT NULL,
+  `state` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
+INSERT INTO `goods` VALUES ('1', '测试', '122', '123.00', '2018-04-21 10:28:58', null, '1');
 
 -- ----------------------------
 -- Table structure for person
@@ -106,7 +112,7 @@ CREATE TABLE `person` (
   `createDate` datetime DEFAULT NULL,
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of person
@@ -118,6 +124,7 @@ INSERT INTO `person` VALUES ('9', '123', '123', '女', '132', '465', '9', '0', n
 INSERT INTO `person` VALUES ('10', '张赛', '23', '女', '123456', '15896731218', '10', '0', null, null, '2018-04-11 12:23:04', null);
 INSERT INTO `person` VALUES ('11', '李四', '23', '女', '10322', '123', '11', '0', null, null, '2018-04-11 12:24:56', null);
 INSERT INTO `person` VALUES ('12', '张', '12', '男', '132465', '123456', '12', '0', null, null, '2018-04-11 12:29:09', null);
+INSERT INTO `person` VALUES ('13', '朱志强', '23', '女', '321321312', '15896731218', '9', '1', '1321', '213213', '2018-04-21 10:31:30', '2018-04-21 11:02:39');
 
 -- ----------------------------
 -- Table structure for user
