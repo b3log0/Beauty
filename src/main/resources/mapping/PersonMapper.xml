@@ -200,7 +200,7 @@
     select person.id,person.name from person,user  where user.id=person.userId and  person.type=0 and user.state=0 order by person.createDate  asc
   </select>
 
-  <select id="getBetweenTimePerson" resultType="java.lang.Long">
+ <!-- <select id="getBetweenTimePerson" resultType="java.lang.Long">
     SELECT COUNT(*) FROM person WHERE person.createDate &gt;=#{startDate} AND person.createDate &lt;=#{endDate} AND person.type=1
-  </select>
+  </select>-->
 </mapper>

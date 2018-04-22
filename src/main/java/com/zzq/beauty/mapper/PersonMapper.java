@@ -2,7 +2,9 @@ package com.zzq.beauty.mapper;
 
 import com.github.pagehelper.Page;
 import com.zzq.beauty.model.Person;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,6 +27,6 @@ public interface PersonMapper {
     Page<List<Map<String,Object>>> getPersonAndReCommender(String keyWord);
 
     List<Person> getSalesmanList();
-
+    @Select("SELECT COUNT(*) FROM person WHERE person.createDate >=#{startDate} AND person.createDate <=#{endDate} AND person.type=1")
     long getBetweenTimePerson(@Param("startDate") String startDate,@Param("endDate") String endDate);
 }
