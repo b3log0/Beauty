@@ -28,4 +28,9 @@ public class CareRecordServiceImpl implements CareRecordService{
         Page<List<Map<String,Object>>> page = careRecordMapper.list(keyWord);
         return new PageBean<List<Map<String,Object>>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
     }
+
+    @Override
+    public long getBetweenTimeCount(String startDate, String endDate) {
+        return careRecordMapper.getBetweenTimeCount(startDate,endDate);
+    }
 }

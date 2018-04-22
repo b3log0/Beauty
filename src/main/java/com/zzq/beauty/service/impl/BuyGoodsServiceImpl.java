@@ -86,4 +86,21 @@ public class BuyGoodsServiceImpl implements BuyGoodsService{
     public List<Map<String, Object>> getCareBuyGoods(String goodsIds) {
         return buyGoodsMapper.getCareBuyGoods(goodsIds);
     }
+
+    @Override
+    public PageBean<List<Map<String, Object>>> getSales(Integer pageNum, Integer pageSize, String startDate, String endDate,String keyWord) {
+        PageHelper.startPage(pageNum,pageSize);
+        Page<List<Map<String, Object>>> page =buyGoodsMapper.getSales(startDate,endDate,keyWord);
+        return new PageBean<List<Map<String, Object>>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
+    }
+
+    @Override
+    public double getSale(String startDate, String endDat) {
+        return buyGoodsMapper.getSale(startDate,endDat);
+    }
+
+    @Override
+    public long getSaleGoodsNum(String startDate, String endDate) {
+        return buyGoodsMapper.getSaleGoodsNum(startDate,endDate);
+    }
 }

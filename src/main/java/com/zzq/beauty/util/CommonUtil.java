@@ -273,22 +273,4 @@ public class CommonUtil {
         return toString(helpList,separator);
     }
 
-    public static void main(String[] args) {
-        Person person = new Person();
-
-        person.setId(2);
-
-
-        Person person1 = new Person();
-        person1.setUserid(1);
-        person1.setId(1);
-        person1.setType(1);
-        copyPropertiesToNull(person,new Date());
-        Object obj=person1;
-        System.out.println(obj.getClass().getName());
-        System.out.println("person"+person);
-        System.out.println("person1"+person1);
-
-
-    }
 }

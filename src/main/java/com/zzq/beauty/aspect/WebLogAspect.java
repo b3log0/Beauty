@@ -28,26 +28,28 @@ public class WebLogAspect {
         logger.info("WebLogAspect.doBefore()");
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-
-
         // 记录下请求内容
-        logger.info("URL : " + request.getRequestURL().toString());
-        logger.info("HTTP_METHOD : " + request.getMethod());
-        logger.info("IP : " + request.getRemoteAddr());
-        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        StringBuilder sb=new StringBuilder();
+        sb.append("URL:");
+        sb.append(request.getRequestURL().toString());
+        sb.append("    IP:");
+        sb.append(request.getRemoteAddr());
         //获取所有参数方法一：
+        sb.append("    Parameters:    ");
         Enumeration<String> enu=request.getParameterNames();
         while(enu.hasMoreElements()){
             String paraName=(String)enu.nextElement();
-            System.out.println(paraName+": "+request.getParameter(paraName));
+            sb.append(paraName);
+            sb.append("=");
+            sb.append(request.getParameter(paraName)).append("      ");
         }
+        logger.info(sb.toString());
     }
 
     @AfterReturning("webLog()")
     public void  doAfterReturning(JoinPoint joinPoint){
         // 处理完请求，返回内容
-        logger.info("WebLogAspect.doAfterReturning()");
+       // logger.info("WebLogAspect.doAfterReturning()");
     }
 
 }

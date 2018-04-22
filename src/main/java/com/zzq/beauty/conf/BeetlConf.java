@@ -1,6 +1,5 @@
 package com.zzq.beauty.conf;
 
-import com.ibeetl.starter.BeetlTemplateCustomize;
 import com.zzq.beauty.beetl.CareBuyGoodsFormat;
 import com.zzq.beauty.beetl.GoodsJSONFormat;
 import com.zzq.beauty.util.SpringContextUtils;
@@ -8,6 +7,7 @@ import org.beetl.core.GroupTemplate;
 import org.beetl.core.Tag;
 import org.beetl.core.TagFactory;
 import org.beetl.core.resource.WebAppResourceLoader;
+import org.beetl.ext.simulate.WebSimulate;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,6 @@ import java.util.Map;
  */
 @Configuration
 public class BeetlConf {
-	@Autowired GroupTemplate groupTemplate;
 	@Autowired ApplicationContext applicationContext;
 	@Bean(name = "beetlConfig")
 	public BeetlGroupUtilConfiguration getBeetlGroupUtilConfiguration() {
@@ -49,16 +48,6 @@ public class BeetlConf {
 		//读取配置文件信息
 		return beetlGroupUtilConfiguration;
 	}
-	/*@Bean
-	public BeetlTemplateCustomize beetlTemplateCustomize(){
-		return new BeetlTemplateCustomize(){
-			public void customize(GroupTemplate groupTemplate){
-				System.out.println(SpringContextUtils.getBean(GoodsJSONFormat.class)+"------------------------------------");
-				groupTemplate.registerFunction("FN.goodsJSONFormat",SpringContextUtils.getBean(GoodsJSONFormat.class));
-
-			}
-		};
-	}*/
 	@Bean(name = "beetlViewResolver")
 	public BeetlSpringViewResolver getBeetlSpringViewResolver(@Qualifier("beetlConfig") BeetlGroupUtilConfiguration beetlGroupUtilConfiguration) {
 		BeetlSpringViewResolver beetlSpringViewResolver = new BeetlSpringViewResolver();
@@ -70,11 +59,13 @@ public class BeetlConf {
 		/**
 		 * 注册 beetl function tag
 		 */
+		GroupTemplate groupTemplate = new GroupTemplate();
 		groupTemplate.registerFunction("goodsJSONFormat",applicationContext.getBean(GoodsJSONFormat.class));//
 		groupTemplate.registerFunction("careBuyGoodsFormat",applicationContext.getBean(CareBuyGoodsFormat.class));
 
 		beetlSpringViewResolver.setGroupTemplate(groupTemplate);
 		return beetlSpringViewResolver;
 	}
+
 
 }

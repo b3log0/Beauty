@@ -2,6 +2,8 @@ package com.zzq.beauty.mapper;
 
 import com.github.pagehelper.Page;
 import com.zzq.beauty.model.BuyGoods;
+import com.zzq.beauty.util.PageBean;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +29,9 @@ public interface BuyGoodsMapper {
 
     List<Map<String, Object>> getCareBuyGoods(String goodsIds);
 
+    Page<List<Map<String,Object>>> getSales(@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("keyWord") String keyWord);
+
+    double getSale(@Param("startDate") String startDate,@Param("endDate") String endDate);
+
+    long getSaleGoodsNum(@Param("startDate") String startDate,@Param("endDate") String endDate);
 }

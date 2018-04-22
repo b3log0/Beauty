@@ -152,4 +152,19 @@
   <select id="getCareBuyGoods" parameterType="java.lang.String" resultType="java.util.HashMap">
     SELECT buygoods.goodsSnapshot,(SELECT goods.`name` FROM goods WHERE goods.id=buygoods.goodsId) AS goodsName FROM buygoods WHERE buygoods.id in (#{goodsIds})
   </select>
+
+  <select id="getSales" resultType="java.util.HashMap">
+    SELECT buygoods.id,person.`name` AS userName,buygoods.price,buygoods.goodsSnapshot,buygoods.createDate,buygoods.num,buygoods.state
+    FROM buygoods,person WHERE  buygoods.user_Id=person.id
+    AND (buygoods.createDate &gt;= #{startDate}  AND buygoods.createDate &lt;= #{endDate} ) AND  person.`name` LIKE #{keyWord}
+    ORDER BY buygoods.createDate DESC
+  </select>
+
+  <select id="getSale" resultType="java.lang.Double">
+    SELECT SUM(price) FROM buygoods WHERE buygoods.createDate &gt;= #{startDate} AND buygoods.createDate &lt;= #{endDate}
+  </select>
+  <select id="getSaleGoodsNum" resultType="java.lang.Long">
+    SELECT SUM(num) FROM buygoods WHERE buygoods.createDate &gt;= #{startDate} AND buygoods.createDate &lt;= #{endDate}
+
+  </select>
 </mapper>

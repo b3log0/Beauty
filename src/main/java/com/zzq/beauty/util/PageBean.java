@@ -61,4 +61,15 @@ public class PageBean<T> implements Serializable {
     public void setList(List<T> list) {
         this.list = list;
     }
+
+    @Override
+    public String toString() {
+        return "PageBean{" +
+                "pageNum=" + pageNum +
+                ", pageSize=" + pageSize +
+                ", total=" + total +
+                ", pages=" + pages +
+                ", list=" + list +
+                '}';
+    }
 }

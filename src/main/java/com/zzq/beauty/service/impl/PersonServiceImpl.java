@@ -75,4 +75,9 @@ public class PersonServiceImpl implements PersonService{
         }
         personMapper.updateByPrimaryKeySelective(person);
     }
+
+    @Override
+    public long getBetweenTimePerson(String startDate, String endDate) {
+        return personMapper.getBetweenTimePerson(startDate,endDate);
+    }
 }

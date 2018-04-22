@@ -31,4 +31,12 @@ public interface PersonService {
     List<Person> getSalesman();
 
     void updatePersonSelective(Person person);
+
+    /**
+     * 获取一段时间内 新注册的用户
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    long getBetweenTimePerson(String startDate,String endDate);
 }

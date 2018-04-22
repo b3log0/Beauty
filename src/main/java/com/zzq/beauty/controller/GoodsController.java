@@ -32,7 +32,7 @@ public class GoodsController {
         modelAndView.addObject("list",page.getList());
         modelAndView.addObject("page",page);
         modelAndView.addObject("keyWord",keyWord);
-        modelAndView.setViewName("goods/goodsList");
+        modelAndView.setViewName("/goods/goodsList");
         return modelAndView;
     }
 
@@ -53,7 +53,7 @@ public class GoodsController {
         modelAndView.addObject("list",page.getList());
         modelAndView.addObject("page",page);
         modelAndView.addObject("keyWord",keyWord);
-        modelAndView.setViewName("goods/shutDownGoodsList");
+        modelAndView.setViewName("/goods/shutDownGoodsList");
         return modelAndView;
     }
 
@@ -65,7 +65,7 @@ public class GoodsController {
         }else{
             modelAndView.addObject("goods",goodsService.selectByPrimaryKey(goodsId));
         }
-        modelAndView.setViewName("goods/addGoods");
+        modelAndView.setViewName("/goods/addGoods");
         return modelAndView;
     }
     @RequestMapping("/saveGoods")

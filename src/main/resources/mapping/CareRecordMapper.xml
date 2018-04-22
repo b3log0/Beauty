@@ -125,4 +125,8 @@
     AND p.`name` LIKE #{keyWord}
     ORDER BY carerecord.createDate DESC
   </select>
+
+  <select id="getBetweenTimeCount" resultType="java.lang.Long">
+    SELECT COUNT(*) FROM carerecord WHERE carerecord.createDate &gt;=#{startDate} AND carerecord.createDate &lt;=#{endDate}
+  </select>
 </mapper>

@@ -15,6 +15,6 @@ public class MyExceptionHandler {
         /*if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null) {
             throw e;
         }*/
-        return new MyRestResponse(e.getCode(), e.getMessage(), e.getData());
+        return new MyRestResponse<Object>(e.getCode(), e.getMessage(), e.getData());
     }
 }

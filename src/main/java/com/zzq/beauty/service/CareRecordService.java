@@ -10,4 +10,13 @@ public interface CareRecordService {
     void insert(CareRecord record);
 
     PageBean<List<Map<String,Object>>> list(Integer pageNum,Integer pageSize,String keyWord);
+
+    /**
+     * 一段时间内 护理次数
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    long getBetweenTimeCount(String startDate,String endDate);
+
 }

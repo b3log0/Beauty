@@ -85,8 +85,8 @@
 		<!--beetl-->
 		<dependency>
 			<groupId>com.ibeetl</groupId>
-			<artifactId>beetl-framework-starter</artifactId>
-			<version>1.1.40.RELEASE</version>
+			<artifactId>beetl</artifactId>
+			<version>2.8.0</version>
 		</dependency>
 		<!--JSON-->
 		<dependency>
@@ -123,6 +123,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>//该配置必须
+					<mainClass>com.zzq.beauty.DemoApplication</mainClass>
+				</configuration>
 			</plugin>
 			<!-- mybatis generator 自动生成代码插件 -->
 			<plugin>

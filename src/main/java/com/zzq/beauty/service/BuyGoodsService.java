@@ -5,6 +5,7 @@ import com.zzq.beauty.util.PageBean;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public interface BuyGoodsService {
     void insert(BuyGoods buyGoods);
@@ -30,4 +31,28 @@ public interface BuyGoodsService {
      * @return
      */
     List<Map<String,Object>> getCareBuyGoods(String goodsIds);
+
+    /**
+     * 销售记录
+     * @param pageNum
+     * @param pageSize
+     * @param startDate
+     * @param endDate
+     * @param keyWord
+     * @return
+     */
+    PageBean<List<Map<String,Object>>> getSales(Integer pageNum,Integer pageSize,String startDate,String endDate,String keyWord);
+
+    /**
+     * 返回销售额
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    double getSale(String startDate,String endDate);
+
+    /**
+     * 返回销售个数
+     */
+    long getSaleGoodsNum(String startDate,String endDate);
 }
