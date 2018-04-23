@@ -9,7 +9,7 @@ import java.util.Map;
 public interface CareRecordService {
     void insert(CareRecord record);
 
-    PageBean<List<Map<String,Object>>> list(Integer pageNum,Integer pageSize,String keyWord);
+    PageBean<List<Map<String,Object>>> list(Integer pageNum,Integer pageSize,String keyWord,String startDate,String endDate);
 
     /**
      * 一段时间内 护理次数
@@ -18,5 +18,7 @@ public interface CareRecordService {
      * @return
      */
     long getBetweenTimeCount(String startDate,String endDate);
+
+    String lastCareDate(Integer personId);
 
 }

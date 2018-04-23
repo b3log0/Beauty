@@ -12,7 +12,10 @@ public class InterceptorConf implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns("/**") addPathPatterns拦截所有方法  excludePathPatterns("/user/test")白名单
-        registry.addInterceptor(new WebInterceptor()).addPathPatterns("/**").excludePathPatterns("/static/**");
+        registry.addInterceptor(new WebInterceptor()).addPathPatterns("/**").
+                excludePathPatterns("/static/**").
+                excludePathPatterns("/").
+                excludePathPatterns("/singIn").excludePathPatterns("/out");
     }
 
     /**

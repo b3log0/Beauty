@@ -161,10 +161,10 @@
   </select>
 
   <select id="getSale" resultType="java.lang.Double">
-    SELECT SUM(price) FROM buygoods WHERE buygoods.createDate &gt;= #{startDate} AND buygoods.createDate &lt;= #{endDate}
+    SELECT IFNULL(SUM(price),0) FROM buygoods WHERE buygoods.createDate &gt;= #{startDate} AND buygoods.createDate &lt;= #{endDate}
   </select>
   <select id="getSaleGoodsNum" resultType="java.lang.Long">
-    SELECT SUM(num) FROM buygoods WHERE buygoods.createDate &gt;= #{startDate} AND buygoods.createDate &lt;= #{endDate}
+    SELECT IFNULL(SUM(num),0) FROM buygoods WHERE buygoods.createDate &gt;= #{startDate} AND buygoods.createDate &lt;= #{endDate}
 
   </select>
 </mapper>

@@ -74,7 +74,7 @@ public class UserController{
             person.setUpdatedate(new Date());
             person.setId(personId);
             person.setUserid(user_Id);
-            personService.updatePersonSelective(person);
+            personService.updatePersonSelectiveAndbroker(person);
             return new MyRestResponse(RestCode._300.getCode(),RestCode._300.getMessage());
         }
 

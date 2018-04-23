@@ -30,6 +30,12 @@ public interface PersonService {
      */
     List<Person> getSalesman();
 
+    /**
+     * 更新用户的同时更新业务员
+     * @param person
+     */
+    void updatePersonSelectiveAndbroker(Person person);
+
     void updatePersonSelective(Person person);
 
     /**

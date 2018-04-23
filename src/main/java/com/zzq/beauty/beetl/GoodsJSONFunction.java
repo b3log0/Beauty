@@ -6,7 +6,7 @@ import org.beetl.core.Function;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GoodsJSONFormat implements Function {
+public class GoodsJSONFunction implements Function {
     @Override
     public Object call(Object[] objects, Context context) {
         if(objects.length<=1||objects.length>2){

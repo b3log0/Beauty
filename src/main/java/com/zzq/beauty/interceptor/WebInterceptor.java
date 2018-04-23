@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 
 /**
  * 拦截器
@@ -24,6 +25,12 @@ public class WebInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         request.setAttribute("base",request.getContextPath());
+      //  System.out.println(request.getServletPath()+"=================================="+request.getContextPath());
+        if((HashMap)request.getSession().getAttribute("user")==null){
+            System.out.println(request.getContextPath()+"/out");
+            response.sendRedirect(request.getContextPath()+"/out");
+            return  false;
+        }
       //  System.out.println(request.getContextPath()+"------------");
         return true;
     }

@@ -1,13 +1,10 @@
 package com.zzq.beauty.conf;
 
-import com.zzq.beauty.beetl.CareBuyGoodsFormat;
-import com.zzq.beauty.beetl.GoodsJSONFormat;
-import com.zzq.beauty.util.SpringContextUtils;
+import com.zzq.beauty.beetl.CareBuyGoodsFunction;
+import com.zzq.beauty.beetl.GoodsJSONFunction;
+import com.zzq.beauty.beetl.LastCareDateFunction;
 import org.beetl.core.GroupTemplate;
-import org.beetl.core.Tag;
-import org.beetl.core.TagFactory;
 import org.beetl.core.resource.WebAppResourceLoader;
-import org.beetl.ext.simulate.WebSimulate;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 /**
@@ -57,8 +53,9 @@ public class BeetlConf {
 		 * 注册 beetl function tag
 		 */
 		GroupTemplate groupTemplate = new GroupTemplate();
-		groupTemplate.registerFunction("goodsJSONFormat",applicationContext.getBean(GoodsJSONFormat.class));//
-		groupTemplate.registerFunction("careBuyGoodsFormat",applicationContext.getBean(CareBuyGoodsFormat.class));
+		groupTemplate.registerFunction("goodsJSONFormat",applicationContext.getBean(GoodsJSONFunction.class));//
+		groupTemplate.registerFunction("careBuyGoodsFormat",applicationContext.getBean(CareBuyGoodsFunction.class));
+		groupTemplate.registerFunction("lastCareDate",applicationContext.getBean(LastCareDateFunction.class));
 
 		beetlSpringViewResolver.setGroupTemplate(groupTemplate);
 		return beetlSpringViewResolver;

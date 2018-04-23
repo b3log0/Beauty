@@ -27,6 +27,8 @@ public class Person {
 
     private Date updatedate;
 
+    private Date lastCareDate;
+
     public Integer getId() {
         return id;
     }
@@ -121,6 +123,14 @@ public class Person {
 
     public void setUpdatedate(Date updatedate) {
         this.updatedate = updatedate;
+    }
+
+    public Date getLastCareDate() {
+        return lastCareDate;
+    }
+
+    public void setLastCareDate(Date lastCareDate) {
+        this.lastCareDate = lastCareDate;
     }
 
     @Override

@@ -17,7 +17,7 @@
 		      <th width="100"><span class='red'>*</span>姓名</th>
 		      <td>
 				  <div style="width:30%">
-				  <input type="text" name="name" value="${person.name!}" placeholder="姓名" autocomplete="off" class="layui-input"></td>
+				  <input type="text" name="name" value="${person.name!}" lay-verify="required" placeholder="姓名" autocomplete="off" class="layui-input"></td>
 			</div>
 			</tr>
 
@@ -52,7 +52,8 @@
 			  <th><span class='red'>*</span>皮肤</th>
 			  <td>
 				  <div style="width:30%">
-					  <input type="text" name="skin" value="${person.skin!}" placeholder="请输入皮肤" autocomplete="off" class="layui-input">
+					  <textarea name="skin" placeholder="请输入皮肤" class="layui-textarea">${person.skin!}</textarea>
+
 				  </div>
 			  </td>
 		  </tr>
@@ -60,7 +61,8 @@
 			  <th><span class='red'>*</span>症状</th>
 			  <td>
 				  <div style="width:30%">
-					  <input type="text" name="symptom" value="${person.symptom!}" placeholder="请输入皮肤" autocomplete="off" class="layui-input">
+					  <textarea name="symptom" placeholder="请输入症状" class="layui-textarea">${person.symptom!}</textarea>
+
 				  </div>
 			  </td>
 		  </tr>

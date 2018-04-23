@@ -14,10 +14,11 @@
     <result column="symptom" property="symptom" jdbcType="VARCHAR" />
     <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+    <result column="lastCareDate" property="lastCareDate" jdbcType="TIMESTAMP" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, name, age, sex, address, phone, userId, type, skin, symptom, createDate, updateDate
+    id, name, age, sex, address, phone, userId, type, skin, symptom, createDate, updateDate,lastCareDate
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,16 +30,16 @@
     delete from person
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zzq.beauty.model.Person" >
+  <insert id="insert" parameterType="com.zzq.beauty.model.Person" useGeneratedKeys="true" keyProperty="id" >
     insert into person (id, name, age, 
       sex, address, phone, 
       userId, type, skin, 
-      symptom, createDate, updateDate
+      symptom, createDate, updateDate,lastCareDate
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
       #{sex,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{userid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{skin,jdbcType=VARCHAR}, 
-      #{symptom,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP}
+      #{symptom,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP},#{lastCareDate,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zzq.beauty.model.Person" keyProperty="id" useGeneratedKeys="true" >
@@ -80,6 +81,9 @@
       <if test="updatedate != null" >
         updateDate,
       </if>
+      <if test="lastCareDate != null" >
+        lastCareDate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -114,6 +118,9 @@
       </if>
       <if test="createdate != null" >
         #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastCareDate != null" >
+        #{lastCareDate,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedate != null" >
         #{updatedate,jdbcType=TIMESTAMP},
@@ -155,6 +162,9 @@
       </if>
       <if test="updatedate != null" >
         updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastCareDate != null" >
+        lastCareDate= #{lastCareDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -16,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 @Aspect
 @Component
@@ -27,7 +29,7 @@ public class WebLogAspect {
     public void doBefore(JoinPoint joinPoint){
 
         // 接收到请求，记录请求内容
-        logger.info("WebLogAspect.doBefore()");
+      //  logger.info("WebLogAspect.doBefore()");
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         // 记录下请求内容
@@ -45,6 +47,17 @@ public class WebLogAspect {
             sb.append("=");
             sb.append(request.getParameter(paraName)).append("      ");
         }
+        sb.append("操作人  ");
+
+        HashMap map = (HashMap) request.getSession().getAttribute("user");
+        if(map!=null){
+            sb.append("id:");
+            sb.append(map.get("id").toString());
+            sb.append("   name:");
+            sb.append(map.get("name").toString());
+        }
+        sb.append("\n");
+
         logger.info(sb.toString());
     }
 

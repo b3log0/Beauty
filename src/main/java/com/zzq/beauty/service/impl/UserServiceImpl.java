@@ -51,4 +51,9 @@ public class UserServiceImpl implements UserService{
 	public void updateUserSelective(User user) {
 		userMapper.updateByPrimaryKeySelective(user);
 	}
+
+	@Override
+	public Map<String, Object> singIn(String userName, String passWord) {
+		return userMapper.singIn(userName,passWord);
+	}
 }

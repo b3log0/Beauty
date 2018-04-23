@@ -39,6 +39,7 @@
 					<th>家庭住址</th>
 					<th>业务员</th>
 			      <th>创建时间</th>
+					<th>最后护理时间</th>
 			      <th>操作</th>
 			    </tr> 
 			  </thead>
@@ -53,7 +54,8 @@
 					<td>${user.symptom}</td>
 					<td>${user.address}</td>
 					<td>${user.userName!"无"}</td>
-			      <td>${user.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+			        <td>${user.createDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+					<td>${user.lastCareDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 			      <td>
 			      	<!---->
 			      	<button class="layui-btn layui-btn-warm layui-btn-small edit" id="${user.id}">编辑</button>

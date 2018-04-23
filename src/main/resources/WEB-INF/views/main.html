@@ -25,10 +25,10 @@
                 <ul class="layui-nav operate">
                     <li class="layui-nav-item"> 
                         <!-- 进入商城首页    -->
-                        <a href="javascript:;">商品首页</a>
+                        <a href="javascript:;">后台首页</a>
                     </li>
-                    <li class="layui-nav-item"> 
-                        <!-- 进入移动端首页    -->
+                    <!--<li class="layui-nav-item">
+
                         <a href="javascript:;" class="wap">商城WAP</a>
                         <dl class="layui-nav-child">
                             <dd class="p10">
@@ -36,15 +36,15 @@
                                 <p class="tac" style="color:#333;">扫一扫进入商城WAP</p>
                             </dd>
                         </dl>
-                    </li>
+                    </li>-->
                     <li class="layui-nav-item">
-                        <a href="javascript:;">137****6116</a>
+                        <a href="javascript:;">${session.user.username}</a>
                         <dl class="layui-nav-child">
                             <dd>
                             	<a href="javascript:;" class="edit-password">修改密码</a>
                             </dd>
                             <dd>
-                                <a href="登录.html">退出登录</a>
+                                <a href="${base}/out">退出登录</a>
                             </dd>
                         </dl>
                     </li>
@@ -111,7 +111,7 @@
                         </dl>
                     </li>
                     
-                    <li class="layui-nav-item">
+                   <!-- <li class="layui-nav-item">
                         <a href="javascript:;">统计查询</a>
                         <dl class="layui-nav-child">
                             <dd>
@@ -159,7 +159,7 @@
                                 <a href="javascript:;" data-url="服务协议.html" data-id="32">服务协议</a>
                             </dd>
                         </dl>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>
@@ -192,12 +192,13 @@
 
             // 修改密码
             $(document).on("click", ".edit-password", function() {
-                layer.open({
+                layer.msg('暂未开放！',{time: 2000});
+               /* layer.open({
                   type:2
                   ,area:['450px', '320px']
                   ,title:"修改密码"
                   ,content: '修改密码.html'
-                });
+                });*/
             });
         });
     </script>

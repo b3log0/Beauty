@@ -96,6 +96,7 @@ public class BuyGoodsServiceImpl implements BuyGoodsService{
 
     @Override
     public double getSale(String startDate, String endDat) {
+        System.out.println(buyGoodsMapper.getSale(startDate,endDat)+"==================");
         return buyGoodsMapper.getSale(startDate,endDat);
     }
 

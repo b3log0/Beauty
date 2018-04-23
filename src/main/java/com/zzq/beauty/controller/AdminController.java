@@ -79,7 +79,7 @@ public class AdminController {
             person.setId(personId);
             user.setId(userId);
             user.setCreatedate(new Date());
-            personService.updatePersonSelective(person);
+            personService.updatePersonSelectiveAndbroker(person);
             userService.updateUserSelective(user);
             return new MyRestResponse(RestCode._300.getCode(),RestCode._300.getMessage());
         }

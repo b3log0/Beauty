@@ -52,4 +52,8 @@ public interface UserService {
 	 */
 	void freezeOrUnfreeze(Integer userId);
 
+	/**
+	 * 登录
+	 */
+	Map<String,Object> singIn(String userName,String passWord);
 }

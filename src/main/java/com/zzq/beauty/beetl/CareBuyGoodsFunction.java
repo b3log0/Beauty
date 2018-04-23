@@ -16,7 +16,7 @@ import java.util.Map;
  * 护理使用的产品
  */
 @Component
-public class CareBuyGoodsFormat implements Function{
+public class CareBuyGoodsFunction implements Function{
     @Autowired
     BuyGoodsService buyGoodsService;
     @Override

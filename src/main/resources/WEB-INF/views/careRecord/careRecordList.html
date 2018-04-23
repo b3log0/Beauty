@@ -13,6 +13,18 @@
 		<div class="content-search">
 			<form class="layui-form layui-form-pane" action="${base}/careRecord/list">
 				<div class="layui-inline">
+					<label class="layui-form-label" >开始时间</label>
+					<div class="layui-input-block">
+						<input id="startDate" name="startDate" value="${startDate!}"  autocomplete="off" placeholder="点击选择开始时间" class="layui-input" type="text"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label" >结束时间</label>
+					<div class="layui-input-block">
+						<input id="endDate" name="endDate" value="${endDate!}"  autocomplete="off" placeholder="点击选择结束时间" class="layui-input" type="text"/>
+					</div>
+				</div>
+				<div class="layui-inline">
 					<label class="layui-form-label" >客户姓名</label>
 					<div class="layui-input-block">
 						<input name="keyWord" value="${keyWord!}"  autocomplete="off" placeholder="客户姓名" class="layui-input" type="text"/>
@@ -78,6 +90,39 @@
 			    laydate = layui.laydate,
 			    layer = layui.layer,
 			    laypage = layui.laypage;
+
+            // 开始时间及截止时间
+            var start = {
+                choose: function(datas){
+                    end.min = datas; //开始日选好后，重置结束日的最小日期
+                    end.start = datas //将结束日的初始值设定为开始日
+                }
+            };
+
+            var end = {
+                choose: function(datas){
+                    start.max = datas; //结束日选好后，重置开始日的最大日期
+                }
+            };
+
+            $('#startDate').click(function(){
+                start.elem = this;
+                laydate({
+                    elem: this, //需显示日期的元素选择器
+                    event: 'click', //触发事件
+                    format: 'YYYY-MM-DD' //日期格式
+                });
+            });
+
+            $('#endDate').click(function(){
+                start.elem = this;
+                laydate({
+                    elem: this, //需显示日期的元素选择器
+                    event: 'click', //触发事件
+                    format: 'YYYY-MM-DD' //日期格式
+                });
+            });
+
 			// 分页
 			 laypage({
 			    cont: 'table-pages'

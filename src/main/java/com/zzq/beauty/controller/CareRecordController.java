@@ -7,6 +7,7 @@ import com.zzq.beauty.service.BuyGoodsService;
 import com.zzq.beauty.service.CareRecordService;
 import com.zzq.beauty.service.PersonService;
 import com.zzq.beauty.util.CommonUtil;
+import com.zzq.beauty.util.DateUtil;
 import com.zzq.beauty.util.PageBean;
 import com.zzq.beauty.util.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,10 +81,22 @@ public class CareRecordController {
         return new MyRestResponse(RestCode._200.getCode(),"操作成功！");
     }
     @RequestMapping("/list")
-    public ModelAndView list( @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
+    public ModelAndView list(@RequestParam(value = "startDate",required = false,defaultValue = "null") String startDate,
+                             @RequestParam(value = "endDate",required = false,defaultValue = "null") String endDate,
+                             @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
                               @RequestParam(value = "keyWord",defaultValue = "",required = false) String keyWord){
         ModelAndView modelAndView = new ModelAndView();
-        PageBean<List<Map<String,Object>>> page =careRecordService.list(pageNum,10,"%"+keyWord+"%");
+        if(startDate.equals("null")){
+            startDate=new SimpleDateFormat("yyyy-MM-01").format(new Date());
+        }
+        if(endDate.equals("null")){
+            int maxDay= DateUtil.getCurrentMonthLastDay();
+            endDate=new SimpleDateFormat("yyyy-MM-"+maxDay).format(new Date());
+        }
+        modelAndView.addObject("startDate",startDate);
+        modelAndView.addObject("endDate",endDate);
+
+        PageBean<List<Map<String,Object>>> page =careRecordService.list(pageNum,10,"%"+keyWord+"%",startDate,endDate);
         modelAndView.addObject("list",page.getList());
         modelAndView.addObject("page",page);
         modelAndView.addObject("keyWord",keyWord);

@@ -27,12 +27,14 @@ public class PersonServiceImpl implements PersonService{
     @Override
     @Transactional
     public void insert(Person person) {
+        personMapper.insert(person);
         Broker broker = new Broker();
+        System.out.println("===================="+person.getId());
         broker.setClient(person.getId());
         broker.setPuller(person.getUserid());
         broker.setStartdate(new Date());
         brokerMapper.insert(broker);
-        personMapper.insert(person);
+
     }
 
     @Override
@@ -59,7 +61,7 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     @Transactional
-    public void updatePersonSelective(Person person) {
+    public void updatePersonSelectiveAndbroker(Person person) {
         Person p =getPersonById(person.getId());
         if(p.getUserid().intValue()!=person.getUserid().intValue()){
             Broker broker=brokerMapper.selectLaster(person.getId());
@@ -73,6 +75,10 @@ public class PersonServiceImpl implements PersonService{
             broker.setStartdate(new Date());
             brokerMapper.insert(broker);
         }
+        personMapper.updateByPrimaryKeySelective(person);
+    }
+    @Transactional
+    public void updatePersonSelective(Person person) {
         personMapper.updateByPrimaryKeySelective(person);
     }
 

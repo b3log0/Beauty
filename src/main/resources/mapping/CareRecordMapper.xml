@@ -103,7 +103,7 @@
       updateDate = #{updatedate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="list" parameterType="java.lang.String" resultType="java.util.HashMap">
+  <select id="list" resultType="java.util.HashMap">
     SELECT
     carerecord.id,
     p.`name` AS `user`,
@@ -123,6 +123,8 @@
     WHERE
     carerecord.personId = p.id
     AND p.`name` LIKE #{keyWord}
+      and (carerecord.createDate &gt;=#{startDate} AND carerecord.createDate &lt;=#{endDate})
+
     ORDER BY carerecord.createDate DESC
   </select>
 
