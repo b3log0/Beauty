@@ -21,9 +21,6 @@ import org.springframework.core.io.support.ResourcePatternUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * beetlConf模板引擎配置文件
