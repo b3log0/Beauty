@@ -204,6 +204,10 @@
     person.phone LIKE #{keyWord}
     OR person.`name` LIKE #{keyWord}
     )
+    <if test="where != null">
+      ${where}
+    </if>
+    order by person.lastCareDate DESC
   </select>
 
   <select id="getSalesmanList" resultType="com.zzq.beauty.model.Person">

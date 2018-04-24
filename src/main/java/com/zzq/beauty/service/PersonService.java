@@ -25,6 +25,7 @@ public interface PersonService {
      */
     PageBean<List<Map<String,Object>>> getPersonAndReCommender(int pageNum, int pageSize, String keyWord);
 
+    PageBean<List<Map<String,Object>>> getPersonAndReCommenderAndWhere(int pageNum, int pageSize, String keyWord,Integer outCareDay);
     /**
      * 返回所有业务员
      */
@@ -45,4 +46,9 @@ public interface PersonService {
      * @return
      */
     long getBetweenTimePerson(String startDate,String endDate);
+
+    /**
+     * 护理超时人数
+     */
+    long getCareOutTimeTimePerson(String startDate,String endDate);
 }

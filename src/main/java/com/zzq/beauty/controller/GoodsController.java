@@ -24,17 +24,25 @@ public class GoodsController {
     @RequestMapping("/goodsList")
     public ModelAndView goodsList(
             @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
-            @RequestParam(value = "keyWord",defaultValue = "",required = false) String keyWord
+            @RequestParam(value = "keyWord",defaultValue = "",required = false) String keyWord,
+            @RequestParam(value = "inStock",defaultValue = "0",required = false) Integer inStock
     ){
-
+        PageBean<List<Goods>>page =null;
         ModelAndView modelAndView = new ModelAndView();
-        PageBean<List<Goods>>page =goodsService.goodsList(pageNum,10,"%"+keyWord+"%");
+        if(inStock==0){
+            page=goodsService.goodsList(pageNum,10,"%"+keyWord+"%");
+        }else{
+            page=goodsService.goodsListWhereInStock(pageNum,10,"%"+keyWord+"%",inStock);
+        }
+
         modelAndView.addObject("list",page.getList());
         modelAndView.addObject("page",page);
         modelAndView.addObject("keyWord",keyWord);
+        modelAndView.addObject("inStock",inStock);
         modelAndView.setViewName("/goods/goodsList");
         return modelAndView;
     }
+    //inStockGoodsList.html
 
     /**
      * 下架商品

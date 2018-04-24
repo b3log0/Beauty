@@ -2,11 +2,9 @@ package com.zzq.beauty.controller;
 
 import com.zzq.beauty.model.User;
 import com.zzq.beauty.rest.MyRestResponse;
-import com.zzq.beauty.service.BuyGoodsService;
-import com.zzq.beauty.service.CareRecordService;
-import com.zzq.beauty.service.PersonService;
-import com.zzq.beauty.service.UserService;
+import com.zzq.beauty.service.*;
 import com.zzq.beauty.util.DateUtil;
+import com.zzq.beauty.util.PropUtil;
 import com.zzq.beauty.util.RestCode;
 import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,8 @@ public class IndexController {
     private CareRecordService careRecordService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private GoodsService goodsService;
     @RequestMapping("/index/index")
     public ModelAndView index(){
             ModelAndView  mv=  new ModelAndView();
@@ -40,11 +40,15 @@ public class IndexController {
     }
     @RequestMapping("/index/main")
     public ModelAndView main(){
+        //获取prop文件内容
+        String indexStatistics = PropUtil.readValue(getClass().getResource("/conf.properties").getPath(),"indexStatistics");
+        int indexDay=Integer.parseInt(indexStatistics);
+
         ModelAndView  mv=  new ModelAndView();
+        mv.addObject("indexDay",indexDay);
+        Date endDate= new Date();
 
-        Date endDate= DateUtil.beforOrAfterTime(new Date(),1);
-
-        Date startDate=DateUtil.beforOrAfterTime(endDate,-7);;
+        Date startDate=DateUtil.beforOrAfterTime(endDate,-indexDay);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -63,6 +67,21 @@ public class IndexController {
         //护理次数
         long careNum=careRecordService.getBetweenTimeCount(startDateStr,endDateStr);
         mv.addObject("careNum",careNum);
+        //护理超时人数
+        String dontCareByDay= PropUtil.readValue(getClass().getResource("/conf.properties").getPath(),"dontCareByDay");
+         startDate=DateUtil.beforOrAfterTime(endDate,-Integer.parseInt(dontCareByDay));
+         startDateStr=simpleDateFormat.format(startDate);
+         endDateStr=simpleDateFormat.format(endDate);
+        long careOutTimeNum=personService.getCareOutTimeTimePerson(startDateStr,endDateStr);
+
+        mv.addObject("outCare",dontCareByDay);
+        mv.addObject("careOutTimeNum",careOutTimeNum);
+        //库存预警
+        String inventoryWarning= PropUtil.readValue(getClass().getResource("/conf.properties").getPath(),"inventoryWarning");
+        mv.addObject("inventoryWarning",inventoryWarning);
+        long inStock=goodsService.goodsInStock(Integer.parseInt(inventoryWarning));
+        mv.addObject("inStock",inStock);
+
         mv.setViewName("index");
         return  mv;
     }

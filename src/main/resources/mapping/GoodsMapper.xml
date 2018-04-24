@@ -115,8 +115,13 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="goodsList" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select * from goods where 1=1 and name like #{keyWord} and state=1 order by createDate DESC
+  <select id="goodsList" resultMap="BaseResultMap" >
+    select * from goods where 1=1 and name like #{keyWord} and state=1
+    <if test="where != null">
+      ${where}
+    </if>
+
+    order by createDate DESC
   </select>
   
   <select id="dropOffGoodsList"  resultMap="BaseResultMap" parameterType="java.lang.String">

@@ -31,13 +31,20 @@ public class UserController{
 
     @RequestMapping("/userList")
 	public ModelAndView userList(@RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
-                                 @RequestParam(value = "keyWord",defaultValue = "",required = false) String  keyWord
+                                 @RequestParam(value = "keyWord",defaultValue = "",required = false) String  keyWord,
+                                 @RequestParam(value = "outCare",defaultValue = "0",required=false) Integer outCare
                                  ){
 	    modelAndView = new ModelAndView();
-        PageBean<List<Map<String,Object>>> page= personService.getPersonAndReCommender(pageNum,10,"%"+keyWord+"%");
+        PageBean<List<Map<String,Object>>>page=null;
+        if(outCare==0){
+            page= personService.getPersonAndReCommender(pageNum,10,"%"+keyWord+"%");
+        }else{
+            page= personService.getPersonAndReCommenderAndWhere(pageNum,10,"%"+keyWord+"%",outCare);
+        }
         modelAndView.addObject("list",page.getList());
         modelAndView.addObject("page",page);
         modelAndView.addObject("keyWord",keyWord);
+        modelAndView.addObject("outCare",outCare);
         modelAndView.setViewName("/user/userList");
         return modelAndView;
     }

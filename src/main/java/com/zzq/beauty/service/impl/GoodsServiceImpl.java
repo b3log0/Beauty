@@ -34,7 +34,14 @@ public class GoodsServiceImpl implements GoodsService{
     @Override
     public PageBean<List<Goods>> goodsList(Integer pageNum, Integer pageSize, String keyWord) {
         PageHelper.startPage(pageNum,pageSize);
-        Page<List<Goods>> page = goodsMapper.goodsList(keyWord);
+        Page<List<Goods>> page = goodsMapper.goodsList(keyWord,null);
+        return new PageBean<List<Goods>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
+    }
+
+    @Override
+    public PageBean<List<Goods>> goodsListWhereInStock(Integer pageNum, Integer pageSize, String keyWord,Integer inStock) {
+        PageHelper.startPage(pageNum,pageSize);
+        Page<List<Goods>> page = goodsMapper.goodsList(keyWord," and num <="+inStock);
         return new PageBean<List<Goods>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
     }
 
@@ -49,5 +56,10 @@ public class GoodsServiceImpl implements GoodsService{
         PageHelper.startPage(pageNum,pageSize);
         Page<List<Goods>> page = goodsMapper.dropOffGoodsList(keyWord);
         return new PageBean<List<Goods>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
+    }
+
+    @Override
+    public long goodsInStock(Integer inStock) {
+        return goodsMapper.goodsInStock(inStock);
     }
 }

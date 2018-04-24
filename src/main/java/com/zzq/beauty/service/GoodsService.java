@@ -20,6 +20,8 @@ public interface GoodsService {
      * @return
      */
     PageBean<List<Goods>> goodsList(Integer pageNum,Integer pageSize,String keyWord);
+
+    PageBean<List<Goods>> goodsListWhereInStock(Integer pageNum,Integer pageSize,String keyWord,Integer inStock);
     /**
      * 分页查询下架商品
      * @param pageNum
@@ -34,4 +36,10 @@ public interface GoodsService {
      * @param goods
      */
     void shutDownOrUp(Goods goods);
+
+    /**
+     * 库存预警
+     */
+    long goodsInStock(Integer inStock);
+
 }

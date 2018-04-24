@@ -50,7 +50,14 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public PageBean<List<Map<String, Object>>> getPersonAndReCommender(int pageNum, int pageSize, String keyWord) {
         PageHelper.startPage(pageNum,pageSize);
-        Page page = personMapper.getPersonAndReCommender(keyWord);
+        Page page = personMapper.getPersonAndReCommender(keyWord,null);
+        return new PageBean<List<Map<String, Object>>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
+    }
+
+    @Override
+    public PageBean<List<Map<String, Object>>> getPersonAndReCommenderAndWhere(int pageNum, int pageSize, String keyWord, Integer outCareDay) {
+        PageHelper.startPage(pageNum,pageSize);
+        Page page = personMapper.getPersonAndReCommender(keyWord," and datediff(DATE_FORMAT(NOW(),'%Y-%m-%d'),DATE_FORMAT(lastCareDate,'%Y-%m-%d'))>="+outCareDay);
         return new PageBean<List<Map<String, Object>>>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getResult());
     }
 
@@ -85,5 +92,10 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public long getBetweenTimePerson(String startDate, String endDate) {
         return personMapper.getBetweenTimePerson(startDate,endDate);
+    }
+
+    @Override
+    public long getCareOutTimeTimePerson(String startDate, String endDate) {
+        return personMapper.getCareOutTimeTimePerson(startDate,endDate);
     }
 }
