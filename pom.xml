@@ -123,11 +123,20 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<fork>true</fork>//该配置必须
-					<mainClass>com.zzq.beauty.DemoApplication</mainClass>
-				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version><!--$NO-MVN-MAN-VER$ -->
+			</plugin>
+
 			<!-- mybatis generator 自动生成代码插件 -->
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>

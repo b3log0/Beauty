@@ -1,5 +1,6 @@
 package com.zzq.beauty.controller;
 
+import com.zzq.beauty.DemoApplication;
 import com.zzq.beauty.model.User;
 import com.zzq.beauty.rest.MyRestResponse;
 import com.zzq.beauty.service.*;
@@ -8,6 +9,8 @@ import com.zzq.beauty.util.PropUtil;
 import com.zzq.beauty.util.RestCode;
 import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +25,7 @@ import java.util.HashMap;
 @Controller
 @RequestMapping("/")
 public class IndexController {
+    private String confProp;
     @Autowired
     private PersonService personService;
     @Autowired
@@ -41,7 +45,7 @@ public class IndexController {
     @RequestMapping("/index/main")
     public ModelAndView main(){
         //获取prop文件内容
-        String indexStatistics = PropUtil.readValue(getClass().getResource("/conf.properties").getPath(),"indexStatistics");
+        String indexStatistics = PropUtil.readValue("D:\\conf.properties","indexStatistics");
         int indexDay=Integer.parseInt(indexStatistics);
 
         ModelAndView  mv=  new ModelAndView();
@@ -68,7 +72,7 @@ public class IndexController {
         long careNum=careRecordService.getBetweenTimeCount(startDateStr,endDateStr);
         mv.addObject("careNum",careNum);
         //护理超时人数
-        String dontCareByDay= PropUtil.readValue(getClass().getResource("/conf.properties").getPath(),"dontCareByDay");
+        String dontCareByDay= PropUtil.readValue("D:\\conf.properties","dontCareByDay");
          startDate=DateUtil.beforOrAfterTime(endDate,-Integer.parseInt(dontCareByDay));
          startDateStr=simpleDateFormat.format(startDate);
          endDateStr=simpleDateFormat.format(endDate);
@@ -77,7 +81,7 @@ public class IndexController {
         mv.addObject("outCare",dontCareByDay);
         mv.addObject("careOutTimeNum",careOutTimeNum);
         //库存预警
-        String inventoryWarning= PropUtil.readValue(getClass().getResource("/conf.properties").getPath(),"inventoryWarning");
+        String inventoryWarning= PropUtil.readValue("D:\\conf.properties","inventoryWarning");
         mv.addObject("inventoryWarning",inventoryWarning);
         long inStock=goodsService.goodsInStock(Integer.parseInt(inventoryWarning));
         mv.addObject("inStock",inStock);
