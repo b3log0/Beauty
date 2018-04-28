@@ -20,7 +20,7 @@ public class SysController {
     @RequestMapping("/sys")
     public ModelAndView sysPage() throws IOException {
         ModelAndView modelAndView = new ModelAndView();
-        Properties properties= PropUtil.readProperties(getClass().getResource("/conf.properties").getPath());
+        Properties properties= PropUtil.readProperties("D:\\conf.properties");
         String inventoryWarning= properties.getProperty("inventoryWarning");
         String dontCareByDay= properties.getProperty("dontCareByDay");
         String indexStatistics= properties.getProperty("indexStatistics");
@@ -36,7 +36,7 @@ public class SysController {
         map.put("inventoryWarning",sys.getInventoryWarning());
         map.put("dontCareByDay",sys.getDontCareByDay());
         map.put("indexStatistics",sys.getIndexStatistics());
-        PropUtil.writePropertiesList(getClass().getResource("/conf.properties").getPath(),map);
+        PropUtil.writePropertiesList("D:\\conf.properties",map);
         return new View().redirect("/sys/sys");
     }
 }
