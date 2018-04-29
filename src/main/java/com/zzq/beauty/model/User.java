@@ -8,7 +8,7 @@ public class User {
     private String username;
 
     private String password;
-
+    //0为正常状态 1为冻结状态
     private Integer state;
 
     private Date createdate;

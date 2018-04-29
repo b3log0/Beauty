@@ -36,6 +36,9 @@ public class IndexController {
     private UserService userService;
     @Autowired
     private GoodsService goodsService;
+    @Autowired
+    private SysService sysService;
+
     @RequestMapping("/index/index")
     public ModelAndView index(){
             ModelAndView  mv=  new ModelAndView();
@@ -45,7 +48,7 @@ public class IndexController {
     @RequestMapping("/index/main")
     public ModelAndView main(){
         //获取prop文件内容
-        String indexStatistics = PropUtil.readValue("D:\\conf.properties","indexStatistics");
+        String indexStatistics = sysService.select("indexStatistics").getValue();
         int indexDay=Integer.parseInt(indexStatistics);
 
         ModelAndView  mv=  new ModelAndView();
@@ -72,7 +75,7 @@ public class IndexController {
         long careNum=careRecordService.getBetweenTimeCount(startDateStr,endDateStr);
         mv.addObject("careNum",careNum);
         //护理超时人数
-        String dontCareByDay= PropUtil.readValue("D:\\conf.properties","dontCareByDay");
+        String dontCareByDay= sysService.select("dontCareByDay").getValue();
          startDate=DateUtil.beforOrAfterTime(endDate,-Integer.parseInt(dontCareByDay));
          startDateStr=simpleDateFormat.format(startDate);
          endDateStr=simpleDateFormat.format(endDate);
@@ -81,7 +84,7 @@ public class IndexController {
         mv.addObject("outCare",dontCareByDay);
         mv.addObject("careOutTimeNum",careOutTimeNum);
         //库存预警
-        String inventoryWarning= PropUtil.readValue("D:\\conf.properties","inventoryWarning");
+        String inventoryWarning= sysService.select("inventoryWarning").getValue();
         mv.addObject("inventoryWarning",inventoryWarning);
         long inStock=goodsService.goodsInStock(Integer.parseInt(inventoryWarning));
         mv.addObject("inStock",inStock);
@@ -109,13 +112,17 @@ public class IndexController {
         ModelAndView  mv=  new ModelAndView();
         HashMap<String,Object> user= (HashMap<String, Object>) userService.singIn(userName,passWord);
         if(user!=null){
+            if(Integer.parseInt(user.get("state").toString())==1){
+                return  new MyRestResponse(RestCode._304.getCode(),RestCode._304.getMessage(),null);
+            }
             User u = new User();
             u.setId(Integer.parseInt(user.get("id").toString()));
             u.setLastlogindate(new Date());
             userService.updateUserSelective(u);
             request.getSession().setAttribute("user",user);
             return  new MyRestResponse(200,"",null);
-        }else{
+        }
+        else{
             return  new MyRestResponse(RestCode._303.getCode(),RestCode._303.getMessage(),null);
         }
     }

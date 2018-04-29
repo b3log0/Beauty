@@ -16,7 +16,7 @@ public class Person {
     private String phone;
 
     private Integer userid;
-
+    //0管理员 1客户
     private Integer type;
 
     private String skin;

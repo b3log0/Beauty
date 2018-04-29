@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : qiangzi
-Source Server Version : 50528
+Source Server         : localhost_3306
+Source Server Version : 50529
 Source Host           : localhost:3306
 Source Database       : beauty
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2018-04-21 21:26:19
+Date: 2018-04-29 09:10:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,12 +26,11 @@ CREATE TABLE `broker` (
   `startDate` datetime DEFAULT NULL,
   `endDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of broker
 -- ----------------------------
-INSERT INTO `broker` VALUES ('1', null, '9', '2018-04-21 10:31:30', null);
 
 -- ----------------------------
 -- Table structure for buygoods
@@ -48,12 +47,11 @@ CREATE TABLE `buygoods` (
   `updateDate` datetime DEFAULT NULL,
   `user_Id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of buygoods
 -- ----------------------------
-INSERT INTO `buygoods` VALUES ('1', '1', '123.00', '{\"createdate\":1524277738000,\"id\":1,\"name\":\"??\",\"num\":123,\"price\":123,\"state\":1}', '2018-04-21 10:31:41', '1', '1', null, '13');
 
 -- ----------------------------
 -- Table structure for carerecord
@@ -67,12 +65,11 @@ CREATE TABLE `carerecord` (
   `createDate` datetime DEFAULT NULL COMMENT '护理时间',
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of carerecord
 -- ----------------------------
-INSERT INTO `carerecord` VALUES ('1', '13', '9', '1', '2018-04-21 10:56:13', null);
 
 -- ----------------------------
 -- Table structure for goods
@@ -87,12 +84,11 @@ CREATE TABLE `goods` (
   `updateDate` datetime DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1', '测试', '122', '123.00', '2018-04-21 10:28:58', null, '1');
 
 -- ----------------------------
 -- Table structure for person
@@ -111,20 +107,35 @@ CREATE TABLE `person` (
   `symptom` varchar(255) DEFAULT NULL COMMENT '症状',
   `createDate` datetime DEFAULT NULL,
   `updateDate` datetime DEFAULT NULL,
+  `lastCareDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of person
 -- ----------------------------
-INSERT INTO `person` VALUES ('6', '朱志强', '23', '男', '123456', '456789', null, null, null, null, null, null);
-INSERT INTO `person` VALUES ('7', '朱志强', '23', '男', '123', '15896731218', '7', '0', null, null, '2018-04-11 11:03:49', null);
-INSERT INTO `person` VALUES ('8', '朱志强', '23', '男', 'qwer', '123', '8', '0', null, null, '2018-04-11 11:26:20', null);
-INSERT INTO `person` VALUES ('9', '123', '123', '女', '132', '465', '9', '0', null, null, '2018-04-11 11:27:00', null);
-INSERT INTO `person` VALUES ('10', '张赛', '23', '女', '123456', '15896731218', '10', '0', null, null, '2018-04-11 12:23:04', null);
-INSERT INTO `person` VALUES ('11', '李四', '23', '女', '10322', '123', '11', '0', null, null, '2018-04-11 12:24:56', null);
-INSERT INTO `person` VALUES ('12', '张', '12', '男', '132465', '123456', '12', '0', null, null, '2018-04-11 12:29:09', null);
-INSERT INTO `person` VALUES ('13', '朱志强', '23', '女', '321321312', '15896731218', '9', '1', '1321', '213213', '2018-04-21 10:31:30', '2018-04-21 11:02:39');
+INSERT INTO `person` VALUES ('15', '超级管理员', null, null, null, null, '14', '0', null, null, null, null, null);
+INSERT INTO `person` VALUES ('16', '测试', '18', '女', '鹿邑', '123456789', '15', '0', null, null, '2018-04-28 20:01:06', null, null);
+
+-- ----------------------------
+-- Table structure for sys
+-- ----------------------------
+DROP TABLE IF EXISTS `sys`;
+CREATE TABLE `sys` (
+  `id` int(11) NOT NULL,
+  `key` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys
+-- ----------------------------
+INSERT INTO `sys` VALUES ('1', 'indexStatistics', '7', '2018-04-28 18:30:47', '2018-04-28 18:43:01');
+INSERT INTO `sys` VALUES ('2', 'dontCareByDay', '7', '2018-04-28 18:30:50', '2018-04-28 18:43:01');
+INSERT INTO `sys` VALUES ('3', 'inventoryWarning', '2', '2018-04-28 18:30:54', '2018-04-28 18:43:01');
 
 -- ----------------------------
 -- Table structure for user
@@ -138,15 +149,10 @@ CREATE TABLE `user` (
   `createDate` datetime DEFAULT NULL,
   `lastLoginDate` datetime DEFAULT NULL COMMENT '最后登录时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('6', '123', '123', null, null, null);
-INSERT INTO `user` VALUES ('7', '15896731218', '123456', '0', '2018-04-11 11:03:48', null);
-INSERT INTO `user` VALUES ('8', '123', '123', '0', '2018-04-11 11:26:19', null);
-INSERT INTO `user` VALUES ('9', '456', 'qwer', '0', '2018-04-11 11:27:00', null);
-INSERT INTO `user` VALUES ('10', 'zhangsai', '123', '0', '2018-04-11 12:23:04', null);
-INSERT INTO `user` VALUES ('11', '李四', '1223', '0', '2018-04-11 12:24:56', null);
-INSERT INTO `user` VALUES ('12', '1234', '123456', '0', '2018-04-11 12:29:09', null);
+INSERT INTO `user` VALUES ('14', 'admin', 'admin', '0', '2018-04-28 18:57:28', '2018-04-29 09:03:36');
+INSERT INTO `user` VALUES ('15', '123', '123', '1', '2018-04-28 20:01:06', '2018-04-28 20:01:52');

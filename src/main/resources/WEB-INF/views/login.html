@@ -82,7 +82,11 @@
                     if(data.code==200){
                         layer.msg('登录成功！',{time: 2000});
 						window.location.href="${base}/index/index";
-                    }else{
+                    }else if(data.code==304){
+						ff=false;
+						codeFn.resetCode();
+						layer.msg(data.message,{time: 2000});
+					}else{
                         ff=false;
                         codeFn.resetCode();
                         layer.msg(data.message,{time: 2000});
